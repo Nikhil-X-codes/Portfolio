@@ -24,7 +24,6 @@ dist-ssr
 *.sw?
 
 # Public folder
-public/
 
 # Environment variables (already ignored by *.local, but being explicit)
 .env
