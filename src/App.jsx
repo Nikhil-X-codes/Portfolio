@@ -216,7 +216,7 @@ export default function App() {
                 </div>
               </div>
         <img
-  src={/images/profile.jpg}
+  src={"/images/profile.jpg"}
   alt="Nikhil Nagar"
   className="profile-image w-80 h-80 rounded-full object-cover border-4 border-blue-500 slide-in-right"
 />
