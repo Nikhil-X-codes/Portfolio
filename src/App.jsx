@@ -74,7 +74,12 @@ export default function App() {
         tech: ['Python','Machine Learning'],
         link: 'https://github.com/Nikhil-X-codes/Company-Bankruptcy-Prediction',
       },
-
+      {
+        title: 'AI-Powered Blog Generation',
+        desc: 'An AI-powered full-stack web application that generates complete blog posts with images, allowing users to create, edit, regenerate, and export content seamlessly through an intuitive interface.',
+        tech: ['MongoDB','Express.js', 'React', 'Node.js','Docker'],
+        link: 'https://ai-blog-frontend-nzc3.onrender.com',
+      },
     ],
     []
   )
