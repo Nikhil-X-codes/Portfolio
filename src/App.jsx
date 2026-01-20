@@ -48,13 +48,13 @@ export default function App() {
         title: 'Vidcast',
         desc: 'A video streaming platform with Video Upload & search , Likes , Comments , Subscription and playlist Management.',
         tech: ['MongoDB','Express.js', 'React', 'Node.js'],
-        link: 'https://vidcast.vercel.app',
+        link: 'https://vidcast12.vercel.app',
       },
       {
         title: 'BusEase',
         desc: 'A Bus Ticket Booking System with virtual credit card , seat selection , Booking and booking history features.',
         tech: ['MongoDB','Express.js', 'React', 'Node.js'],
-        link: 'https://bus-ease-beta.vercel.app',
+        link: 'https://bus-ease-omega.vercel.app',
       },
       {
         title: 'AI-Driven Web Development',
