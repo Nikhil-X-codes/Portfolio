@@ -98,8 +98,6 @@ export default function App() {
       { name: 'C++', icon: Cpu },
       { name: 'Python', icon: Cpu },
       { name: 'Machine Learning', icon: Brain },
-      { name: 'Deep Learning', icon: Brain },
-      { name: 'Deployment', icon: Server },
       { name: 'Data Structures & Algorithms', icon: Cpu },
       { name: 'Core Subjects', icon: BookOpen }
     ],
