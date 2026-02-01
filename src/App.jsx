@@ -15,93 +15,11 @@ function ParticleBackground() {
     let particles = []
     let mouse = { x: null, y: null }
 
-<<<<<<< HEAD
     const resize = () => {
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
-=======
-  const profiles = useMemo(
-    () => [
-      { name: 'GitHub', url: 'https://github.com/Nikhil-X-codes', icon: Github },
-      { name: 'LinkedIn', url: 'https://www.linkedin.com/in/nikhil2310', icon: Linkedin },
-      { name: 'Email', url: 'mailto:nagarn2005@gmail.com', icon: Mail },
-      { name: 'Codolio', url: 'https://codolio.com/profile/J6G0HHGi', icon: Code},
-      { name: 'Research Paper', url: 'https://drive.google.com/drive/folders/1ETdlrfZtmvJTdfi4mo8kRuuqx8Cr6vMr?usp=drive_link', icon: Book},
-    ],
-    []
-  )
-
-  const projects = useMemo(
-    () => [
-      {
-        title: 'Vidcast',
-        desc: 'A video streaming platform with Video Upload & search , Likes , Comments , Subscription and playlist Management.',
-        tech: ['MongoDB','Express.js', 'React', 'Node.js'],
-        link: 'https://vidcast12.vercel.app',
-      },
-      {
-        title: 'BusEase',
-        desc: 'A Bus Ticket Booking System with virtual credit card , seat selection , Booking and booking history features.',
-        tech: ['MongoDB','Express.js', 'React', 'Node.js'],
-        link: 'https://bus-ease-omega.vercel.app',
-      },
-      {
-        title: 'AI-Driven Web Development',
-        desc: 'A web application which integrate Two LLM Models through Hugging Face interferece to assist AI related tasks.',
-        tech: ['Postgresql','Express.js', 'React', 'Node.js'],
-        link: 'https://web-dev-with-ai-intergration.vercel.app',
-      },
-      {
-        title: 'Whatsapp Chat Analyzer',
-        desc: 'A Streamlit Application to analyze Whatsapp Chat Data with various visualizations and statistics at individual as well as group level.',
-        tech: ['Python', 'Streamlit', 'Data Analysis'],
-        link: 'https://wpchat-analysis.streamlit.app',
-      },
-      {
-        title: 'Company Bankruptcy Prediction',
-        desc: 'A Classification Machine Learning Model to predict the likelihood of a company going bankrupt based on its financial ratios and other relevant features.',
-        tech: ['Python','Machine Learning'],
-        link: 'https://github.com/Nikhil-X-codes/Company-Bankruptcy-Prediction',
-      },
-      {
-        title: 'AI-Powered Blog Generation',
-        desc: 'An AI-powered full-stack web application that generates complete blog posts with images, allowing users to create, edit, regenerate, and export content seamlessly through an intuitive interface.',
-        tech: ['MongoDB','Express.js', 'React', 'Node.js','Docker'],
-        link: 'https://ai-blog-frontend-nzc3.onrender.com',
-      },
-    ],
-    []
-  )
-
-  const skills = useMemo(
-    () => [
-      { name: 'JavaScript', icon: Braces },
-      { name: 'React', icon: Library },
-      { name: 'Express.js', icon: Server },
-      { name: 'Node.js', icon: Server },
-      { name: 'MongoDB', icon: Database },
-      { name: 'PostgreSQL', icon: Database },
-      { name: 'MySQL', icon: Database },
-      { name: 'Tailwind CSS', icon: Palette },
-      { name: 'Git & GitHub', icon: GitBranch },
-      { name: 'C++', icon: Cpu },
-      { name: 'Python', icon: Cpu },
-      { name: 'Machine Learning', icon: Brain },
-      { name: 'Data Structures & Algorithms', icon: Cpu },
-      { name: 'Core Subjects', icon: BookOpen }
-    ],
-    []
-  )
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    const emailOk = /.+@.+\..+/.test(form.email)
-    if (!form.name || !emailOk || !form.message) {
-      setStatus('error')
-      setTimeout(() => setStatus(null), 3000)
-      return
->>>>>>> d56303fc91fcc91b798a6dbddb85eda44aad6b94
     }
+    
     resize()
     window.addEventListener('resize', resize)
 
