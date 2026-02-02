@@ -45,7 +45,7 @@ export default function ContactUs() {
   return (
     <section id="contact" className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16">
       <div className="mb-12 scroll-animate from-bottom">
-        <h2 className="text-3xl font-bold mb-3">Contact Us</h2>
+        <h2 className="text-3xl font-bold mb-3">Contact Me</h2>
         <div className="w-16 h-1.5 bg-gradient-to-r from-rose-500 to-pink-600 rounded-full"></div>
       </div>
       <form ref={formRef} className="mt-8 grid gap-4 sm:max-w-md scroll-animate from-left" onSubmit={handleSubmit}>

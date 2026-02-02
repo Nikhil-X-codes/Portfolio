@@ -34,6 +34,12 @@ export default function Projects() {
         tech: ['Python','Machine Learning'],
         link: 'https://github.com/Nikhil-X-codes/Company-Bankruptcy-Prediction',
       },
+      {
+        title: 'AI Blog Generation',
+        desc: 'AI-powered blogging platform that generates complete blog posts with images, allows editing, tone control, and exports content in multiple formats.',
+        tech: ['MongoDB','Express.js', 'React', 'Node.js'],
+        link: 'https://ai-blog-generate.vercel.app',
+      },
     ],
     []
   )

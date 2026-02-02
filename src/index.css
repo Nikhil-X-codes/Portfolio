@@ -2,6 +2,36 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Glowing Button Borders */
+.glow-border-left,
+.glow-border-right {
+  background: linear-gradient(
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.2) 40px,
+    rgba(255, 255, 255, 0.667) 40px,
+    rgb(255, 255, 255),
+    rgba(255, 255, 255, 0.667) calc(100% - 40px),
+    rgba(255, 255, 255, 0.2) calc(100% - 40px),
+    rgba(255, 255, 255, 0)
+  );
+  z-index: 0;
+}
+
+.glow-border-top,
+.glow-border-bottom {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.2) 40px,
+    rgba(255, 255, 255, 0.667) 40px,
+    rgb(255, 255, 255),
+    rgba(255, 255, 255, 0.667) calc(100% - 40px),
+    rgba(255, 255, 255, 0.2) calc(100% - 40px),
+    rgba(255, 255, 255, 0)
+  );
+  z-index: 0;
+}
+
 /* Animated Grid Background */
 .grid-background {
   position: fixed;

@@ -52,17 +52,20 @@ export default function Home() {
           <p className="mt-4 text-gray-600 dark:text-gray-400">
             I am a third-year Information Technology student at IIIT Sonepat with strong experience in building web applications, a solid foundation in Data Structures and Algorithms, and a keen interest in Artificial Intelligence and Machine Learning.
           </p>
-          <div className="mt-6 flex flex-wrap gap-3">
+          <div className="mt-6 flex flex-wrap gap-4">
             {profiles.map(({ name, url, icon: Icon }) => (
               <a
                 key={name}
                 href={url}
                 target="_blank"
                 rel="noreferrer"
-                className="social-btn inline-flex items-center gap-2 rounded border border-gray-200 dark:border-gray-800 px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800"
+                className="inline-flex overflow-hidden focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 h-12 rounded-full p-[1px] relative"
               >
-                <Icon className="h-5 w-5" />
-                <span>{name}</span>
+                <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#10b981_0%,#0d9488_50%,#10b981_100%)]"></span>
+                <span className="inline-flex cursor-pointer items-center justify-center transition-colors hover:bg-slate-950/80 text-sm font-medium text-white bg-slate-950 w-full h-full rounded-full px-6 backdrop-blur-3xl gap-2">
+                  <Icon className="h-5 w-5" />
+                  {name}
+                </span>
               </a>
             ))}
           </div>
