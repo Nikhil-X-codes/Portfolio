@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import emailjs from '@emailjs/browser'
+import Lightning from './ui/Lightning'
 
 export default function ContactUs() {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
@@ -43,8 +44,20 @@ export default function ContactUs() {
   }
 
   return (
-    <section id="contact" className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16">
-      <div className="mb-12 scroll-animate from-bottom">
+    <section id="contact" className="relative py-16 overflow-hidden">
+      {/* Lightning Background */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-35">
+        <Lightning
+          hue={0}
+          xOffset={-0.2}
+          speed={0.5}
+          intensity={0.8}
+          size={1.1}
+        />
+      </div>
+      
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-12 scroll-animate from-bottom">
         <h2 className="text-3xl font-bold mb-3">Contact Me</h2>
         <div className="w-16 h-1.5 bg-gradient-to-r from-rose-500 to-pink-600 rounded-full"></div>
       </div>
@@ -90,6 +103,7 @@ export default function ContactUs() {
           <p className="text-red-600">Please fill all fields with a valid email.</p>
         )}
       </form>
+      </div>
     </section>
   )
 }

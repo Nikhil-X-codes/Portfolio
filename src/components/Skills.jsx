@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Code2, Atom, Database, Cpu, GitBranch, Palette, Brain, Server, ArrowLeft, ArrowRight } from 'lucide-react';
+import Lightning from './ui/Lightning';
 
 export default function Skills() {
   const skills = [
@@ -97,9 +98,21 @@ export default function Skills() {
   };
 
   return (
-    <section id="about" className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16">
-      {/* Header */}
-      <div className="mb-12 scroll-animate from-bottom">
+    <section id="about" className="relative py-16 overflow-hidden">
+      {/* Lightning Background */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-30">
+        <Lightning
+          hue={120}
+          xOffset={0.2}
+          speed={0.4}
+          intensity={0.7}
+          size={0.9}
+        />
+      </div>
+      
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="mb-12 scroll-animate from-bottom">
         <h2 className="text-3xl font-bold mb-3">Skills</h2>
         <div className="w-16 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full"></div>
       </div>
@@ -163,7 +176,7 @@ export default function Skills() {
 
           {/* Center Hub */}
           <div className="absolute inset-0 m-auto w-40 h-40 rounded-full bg-gradient-to-br from-slate-900 to-slate-800 border-[3px] border-emerald-500/30 flex flex-col items-center justify-center z-20 shadow-[0_0_30px_-5px_rgba(0,0,0,0.5)]">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-r from-emerald-500/20 to-teal-500/20 flex items-center justify-center mb-2 border border-emerald-500/30">
+            <div className="w-12 h-12 rounded-full flex items-center justify-center mb-2 border border-emerald-500/30">
               <Code2 className="w-6 h-6 text-emerald-400 stroke-[2]" />
             </div>
             <span className="text-white font-semibold text-lg tracking-tight">Tech Stack</span>
@@ -188,7 +201,7 @@ export default function Skills() {
                     <div className={`relative w-24 h-24 bg-gradient-to-br from-slate-900 to-slate-800 border border-emerald-500/20 rounded-2xl flex items-center justify-center shadow-2xl`}>
                       <selectedSkill.icon className={`w-10 h-10 ${selectedSkill.color} stroke-[1.5]`} />
                     </div>
-                    <div className="absolute -inset-4 rounded-full border border-dashed border-emerald-700/30 animate-[spin_10s_linear_infinite]"></div>
+                    <div className="absolute -inset-4 rounded-full border border-dashed border-emerald-700/30 animate-[spin_16s_linear_infinite]"></div>
                   </div>
 
                   <h3 className="text-2xl font-semibold bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent mb-3 tracking-tight">
@@ -200,11 +213,11 @@ export default function Skills() {
                   </p>
 
                   {/* Tech Tags */}
-                  <div className="flex flex-wrap gap-2 justify-center mb-8">
+                  <div className="flex flex-wrap gap-2 justify-center items-center mb-8">
                     {selectedSkill.tags.map((tag, index) => (
                       <span
                         key={index}
-                        className="px-3 py-1.5 bg-gradient-to-r from-emerald-900/30 to-teal-900/30 border border-emerald-500/30 rounded-full text-xs text-emerald-400 font-medium hover:border-emerald-400/50 transition-colors"
+                        className="px-3 py-1.5 border border-emerald-500/30 rounded-full text-xs text-emerald-400 font-medium hover:border-emerald-400/50 transition-colors"
                       >
                         {tag}
                       </span>
@@ -221,7 +234,7 @@ export default function Skills() {
                     <div className="relative w-24 h-24 bg-gradient-to-br from-slate-900 to-slate-800 border border-emerald-500/20 rounded-2xl flex items-center justify-center shadow-2xl">
                       <Code2 className="w-10 h-10 text-emerald-400 stroke-[1.5]" />
                     </div>
-                    <div className="absolute -inset-4 rounded-full border border-dashed border-emerald-700/30 animate-[spin_10s_linear_infinite]"></div>
+                      <div className="absolute -inset-4 rounded-full border border-dashed border-emerald-700/30 animate-[spin_16s_linear_infinite]"></div>
                   </div>
 
                   <h3 className="text-2xl font-semibold bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent mb-3 tracking-tight">
@@ -287,6 +300,7 @@ export default function Skills() {
           animation: fadeIn 0.5s ease-out;
         }
       `}</style>
+      </div>
     </section>
   );
 }

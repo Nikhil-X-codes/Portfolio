@@ -67,7 +67,8 @@
 /* Scroll Animations - Elements come from corners */
 .scroll-animate {
   opacity: 0;
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  will-change: transform, opacity;
 }
 
 .scroll-animate.from-left {
@@ -257,7 +258,7 @@
 
 /* Social button animation */
 .social-btn {
-  transition: all 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
 
 .social-btn:hover {
@@ -267,7 +268,7 @@
 
 /* Visitor counter */
 .visitor-counter {
-  animation: counterPulse 2s ease-in-out infinite;
+  animation: counterPulse 3s ease-in-out infinite;
   font-weight: 600;
   background: linear-gradient(135deg, #3b82f6, #8b5cf6);
   -webkit-background-clip: text;
@@ -291,7 +292,7 @@
   justify-content: center;
   border-radius: 0.375rem;
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
   cursor: pointer;
   border: none;
   padding: 0.5rem 1rem;
@@ -341,7 +342,7 @@
   position: relative;
   display: block;
   text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.320, 1);
   height: 100%;
 }
 
@@ -359,7 +360,7 @@
   border: 1px solid rgba(60, 60, 80, 0.5);
   border-radius: 1rem;
   overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+  transition: transform 0.35s cubic-bezier(0.23, 1, 0.320, 1), box-shadow 0.35s cubic-bezier(0.23, 1, 0.320, 1), border-color 0.35s cubic-bezier(0.23, 1, 0.320, 1);
   z-index: 10;
 }
 
@@ -380,8 +381,34 @@
 /* Hover 3D Effect */
 .hover-3d {
   position: relative;
-  transition: transform 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.320, 1);
   transform-style: preserve-3d;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .scroll-animate {
+    opacity: 1;
+    transform: none;
+  }
+
+  .project-card-3d:hover,
+  .project-card:hover,
+  .hover-3d:hover,
+  .skill-card:hover,
+  .skill-card-green:hover,
+  .social-btn:hover,
+  .btn-soft:hover:not(:disabled),
+  .profile-image:hover {
+    transform: none;
+    box-shadow: none;
+  }
 }
 
 .hover-3d:hover {
@@ -458,24 +485,24 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --background: oklch(0.12 0.03 248);
+  --foreground: oklch(0.98 0.01 250);
+  --card: oklch(0.16 0.03 248);
+  --card-foreground: oklch(0.98 0.01 250);
+  --popover: oklch(0.16 0.03 248);
+  --popover-foreground: oklch(0.98 0.01 250);
+  --primary: oklch(0.98 0.01 250);
+  --primary-foreground: oklch(0.16 0.03 248);
+  --secondary: oklch(0.2 0.03 248);
+  --secondary-foreground: oklch(0.98 0.01 250);
+  --muted: oklch(0.2 0.02 248);
+  --muted-foreground: oklch(0.7 0.02 248);
+  --accent: oklch(0.2 0.03 248);
+  --accent-foreground: oklch(0.98 0.01 250);
+  --destructive: oklch(0.62 0.22 25.13);
+  --border: oklch(0.28 0.02 248);
+  --input: oklch(0.28 0.02 248);
+  --ring: oklch(0.6 0.03 248);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);

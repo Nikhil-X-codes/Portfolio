@@ -1,5 +1,6 @@
 import { useMemo, useState, useEffect } from 'react'
 import { Github, Linkedin, Mail, Code, Book } from 'lucide-react'
+import Lightning from './ui/Lightning'
 
 export default function Home() {
   const roles = ['Software Developer', 'Lifelong Learner', 'ML Enthusiast', 'Problem Solver']
@@ -41,8 +42,20 @@ export default function Home() {
   )
 
   return (
-    <section id="home" className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-      <div className="grid md:grid-cols-2 gap-10 items-center">
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Lightning Background */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-40">
+        <Lightning
+          hue={240}
+          xOffset={0}
+          speed={0.5}
+          intensity={0.8}
+          size={1}
+        />
+      </div>
+      
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+        <div className="grid md:grid-cols-2 gap-10 items-center">
         <div className="scroll-animate from-left">
           <h2 className="text-4xl sm:text-5xl font-bold mb-4">Hi, I&apos;m Nikhil Nagar</h2>
           <p className="text-lg sm:text-xl text-gray-700 dark:text-gray-300 h-8">
@@ -61,7 +74,7 @@ export default function Home() {
                 rel="noreferrer"
                 className="inline-flex overflow-hidden focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 h-12 rounded-full p-[1px] relative"
               >
-                <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#10b981_0%,#0d9488_50%,#10b981_100%)]"></span>
+                <span className="absolute inset-[-1000%] animate-[spin_8s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#10b981_0%,#0d9488_50%,#10b981_100%)]"></span>
                 <span className="inline-flex cursor-pointer items-center justify-center transition-colors hover:bg-slate-950/80 text-sm font-medium text-white bg-slate-950 w-full h-full rounded-full px-6 backdrop-blur-3xl gap-2">
                   <Icon className="h-5 w-5" />
                   {name}
@@ -75,6 +88,7 @@ export default function Home() {
           alt="Nikhil Nagar"
           className="scroll-animate from-right profile-image w-80 h-80 rounded-full object-cover border-4 border-blue-500"
         />
+        </div>
       </div>
     </section>
   )
