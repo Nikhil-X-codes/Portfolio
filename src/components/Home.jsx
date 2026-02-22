@@ -44,7 +44,7 @@ export default function Home() {
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Lightning Background */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-40">
+      <div className="absolute inset-0 flex items-center justify-center opacity-40 pointer-events-none">
         <Lightning
           hue={240}
           xOffset={0}
@@ -63,7 +63,7 @@ export default function Home() {
             <span className="animate-pulse">|</span>
           </p>
           <p className="mt-4 text-gray-600 dark:text-gray-400">
-            I am a third-year Information Technology student at IIIT Sonepat with strong experience in building web applications, a solid foundation in Data Structures and Algorithms, and a keen interest in Artificial Intelligence and Machine Learning.
+            I am a Third-year Information Technology student at IIIT Sonepat with strong experience in building web applications, a solid foundation in Data Structures and Algorithms, and a keen interest in Artificial Intelligence and Machine Learning.
           </p>
           <div className="mt-6 flex flex-wrap gap-4">
             {profiles.map(({ name, url, icon: Icon }) => (

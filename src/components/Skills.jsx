@@ -98,9 +98,9 @@ export default function Skills() {
   };
 
   return (
-    <section id="about" className="relative py-16 overflow-hidden">
+    <section id="about" className="relative py-8 overflow-hidden">
       {/* Lightning Background */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-30">
+      <div className="absolute inset-0 flex items-center justify-center opacity-30 pointer-events-none">
         <Lightning
           hue={120}
           xOffset={0.2}

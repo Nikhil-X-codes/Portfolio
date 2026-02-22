@@ -4,6 +4,8 @@ import Home from './components/Home'
 import Projects from './components/Projects'
 import Skills from './components/Skills'
 import ContactUs from './components/ContactUs'
+import Lightning from './components/ui/Lightning'
+
 
 export default function App() {
   useEffect(() => {
@@ -27,7 +29,18 @@ export default function App() {
 
   return (
     <div className="relative w-full min-h-screen overflow-x-hidden">
-      <div className="relative z-10 min-h-screen text-gray-100">
+      {/* Global Lightning Background */}
+      <div className="fixed inset-0 z-0 opacity-30">
+        <Lightning
+          hue={200}
+          xOffset={0}
+          speed={0.5}
+          intensity={0.85}
+          size={1}
+        />
+      </div>
+
+      <div className="relative z-10 min-h-screen bg-white text-gray-900 transition-colors duration-300 dark:bg-gray-900 dark:text-gray-100">
         <Navbar />
 
         <main>
