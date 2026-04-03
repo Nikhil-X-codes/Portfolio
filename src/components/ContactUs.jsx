@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import emailjs from '@emailjs/browser'
-import Lightning from './ui/Lightning'
 
 export default function ContactUs() {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
@@ -43,29 +42,25 @@ export default function ContactUs() {
     }
   }
 
+  const handleRipple = (event) => {
+    const rect = event.currentTarget.getBoundingClientRect()
+    event.currentTarget.style.setProperty('--ripple-x', `${event.clientX - rect.left}px`)
+    event.currentTarget.style.setProperty('--ripple-y', `${event.clientY - rect.top}px`)
+  }
+
   return (
-    <section id="contact" className="relative py-8 pb-16 overflow-hidden">
-      {/* Lightning Background */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-35 pointer-events-none">
-        <Lightning
-          hue={0}
-          xOffset={-0.2}
-          speed={0.5}
-          intensity={0.8}
-          size={1.1}
-        />
-      </div>
-      
+    <section id="contact" className="relative ui-section pb-16 overflow-hidden">
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-12 scroll-animate from-bottom">
-        <h2 className="text-3xl font-bold mb-3">Contact Me</h2>
-        <div className="w-16 h-1.5 bg-gradient-to-r from-rose-500 to-pink-600 rounded-full"></div>
-      </div>
-      <form ref={formRef} className="mt-8 grid gap-4 sm:max-w-md scroll-animate from-left" onSubmit={handleSubmit}>
+        <div className="mb-10 sm:mb-12 scroll-animate from-bottom">
+          <p className="ui-kicker mb-2">Let&apos;s Collaborate</p>
+          <h2 className="ui-title mb-3">Contact Me</h2>
+          <div className="ui-divider"></div>
+        </div>
+      <form ref={formRef} className="ui-card mt-8 grid gap-4 sm:max-w-xl p-5 sm:p-6 scroll-animate from-left" onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Your Name"
-          className="rounded border border-gray-300 dark:border-rose-700/50 bg-white dark:bg-gray-900/50 px-3 py-2 dark:text-gray-100 transition-all focus:outline-none focus:ring-2 focus:ring-rose-500"
+          className="rounded-xl border border-gray-600/50 bg-slate-900/60 px-3.5 py-2.5 text-slate-100 transition-all focus:outline-none focus:ring-2 focus:ring-gray-500"
           value={form.name}
           name="user_name"
           onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
@@ -74,7 +69,7 @@ export default function ContactUs() {
         <input
           type="email"
           placeholder="you@example.com"
-          className="rounded border border-gray-300 dark:border-rose-700/50 bg-white dark:bg-gray-900/50 px-3 py-2 dark:text-gray-100 transition-all focus:outline-none focus:ring-2 focus:ring-rose-500"
+          className="rounded-xl border border-gray-600/50 bg-slate-900/60 px-3.5 py-2.5 text-slate-100 transition-all focus:outline-none focus:ring-2 focus:ring-gray-500"
           value={form.email}
           name="user_email"
           onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
@@ -83,7 +78,7 @@ export default function ContactUs() {
         <textarea
           placeholder="Message"
           rows={5}
-          className="rounded border border-gray-300 dark:border-rose-700/50 bg-white dark:bg-gray-900/50 px-3 py-2 dark:text-gray-100 transition-all focus:outline-none focus:ring-2 focus:ring-rose-500"
+          className="rounded-xl border border-gray-600/50 bg-slate-900/60 px-3.5 py-2.5 text-slate-100 transition-all focus:outline-none focus:ring-2 focus:ring-gray-500"
           value={form.message}
           name="message"
           onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
@@ -91,16 +86,17 @@ export default function ContactUs() {
         />
         <button
           type="submit"
-          className="btn btn-soft btn-rose px-4 py-2 font-medium disabled:opacity-50 transition-all duration-300 transform hover:scale-105"
+          className="btn rounded-xl px-4 py-3 font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-[0_0_15px_rgba(6,182,212,0.2)] hover:shadow-[0_0_25px_rgba(6,182,212,0.4)] transition-all duration-300 hover:scale-[1.02] active:scale-95 disabled:opacity-50"
+          onMouseMove={handleRipple}
           disabled={status === 'loading'}
         >
-          {status === 'loading' ? 'Sending...' : 'Send'}
+          {status === 'loading' ? 'Sending...' : 'Send Message'}
         </button>
         {status === 'success' && (
-          <p className="text-green-600 animate-bounce">Message sent! I&apos;ll get back to you soon.</p>
+          <p className="text-gray-300">Message sent! I'll get back to you soon.</p>
         )}
         {status === 'error' && (
-          <p className="text-red-600">Please fill all fields with a valid email.</p>
+          <p className="text-rose-300">Please fill all fields with a valid email.</p>
         )}
       </form>
       </div>

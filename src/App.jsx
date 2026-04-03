@@ -1,13 +1,20 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { StarfieldBackground } from './components/ui/Starfield'
 import Navbar from './components/Navbar'
 import Home from './components/Home'
 import Projects from './components/Projects'
 import Skills from './components/Skills'
 import ContactUs from './components/ContactUs'
-import Lightning from './components/ui/Lightning'
 
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setIsLoading(false), 850)
+    return () => window.clearTimeout(timer)
+  }, [])
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -17,7 +24,7 @@ export default function App() {
           }
         })
       },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+      { threshold: 0.12, rootMargin: '0px 0px -30px 0px' }
     )
 
     document.querySelectorAll('.scroll-animate').forEach((el) => {
@@ -27,20 +34,41 @@ export default function App() {
     return () => observer.disconnect()
   }, [])
 
+  useEffect(() => {
+    const onScroll = () => {
+      document.documentElement.style.setProperty('--scroll-y', String(window.scrollY))
+    }
+
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
     <div className="relative w-full min-h-screen overflow-x-hidden">
-      {/* Global Lightning Background */}
-      <div className="fixed inset-0 z-0 opacity-30">
-        <Lightning
-          hue={200}
-          xOffset={0}
-          speed={0.5}
-          intensity={0.85}
-          size={1}
-        />
+      <StarfieldBackground 
+      count={650}
+      speed={0.4}
+      starColor="#ffffff"
+      twinkle={true}
+        className="pointer-events-none"
+      />
+
+      {isLoading && (
+        <div className="loading-screen">
+          <div className="loading-track">
+            <div className="loading-bar" />
+          </div>
+        </div>
+      )}
+
+      <div className="site-bg" aria-hidden="true">
+        <div className="bg-mesh" />
+        <div className="bg-orb bg-orb-purple parallax-layer" />
+        <div className="bg-orb bg-orb-cyan parallax-layer parallax-layer-fast" />
       </div>
 
-      <div className="relative z-10 min-h-screen bg-white text-gray-900 transition-colors duration-300 dark:bg-gray-900 dark:text-gray-100">
+      <div className="app-shell relative z-10 bg-transparent text-slate-100 transition-colors duration-500 ease-in-out">
         <Navbar />
 
         <main>
