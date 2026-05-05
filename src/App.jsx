@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import { StarfieldBackground } from './components/ui/Starfield'
 import Navbar from './components/Navbar'
 import Home from './components/Home'
 import Projects from './components/Projects'
 import Skills from './components/Skills'
 import ContactUs from './components/ContactUs'
+import ShaderBackground from './components/ui/ShaderBackground'
 
 
 export default function App() {
@@ -46,13 +46,8 @@ export default function App() {
 
   return (
     <div className="relative w-full min-h-screen overflow-x-hidden">
-      <StarfieldBackground 
-      count={650}
-      speed={0.4}
-      starColor="#ffffff"
-      twinkle={true}
-        className="pointer-events-none"
-      />
+      {/* WebGL Shader — full-screen fixed background for all sections */}
+      <ShaderBackground />
 
       {isLoading && (
         <div className="loading-screen">
@@ -61,12 +56,6 @@ export default function App() {
           </div>
         </div>
       )}
-
-      <div className="site-bg" aria-hidden="true">
-        <div className="bg-mesh" />
-        <div className="bg-orb bg-orb-purple parallax-layer" />
-        <div className="bg-orb bg-orb-cyan parallax-layer parallax-layer-fast" />
-      </div>
 
       <div className="app-shell relative z-10 bg-transparent text-slate-100 transition-colors duration-500 ease-in-out">
         <Navbar />

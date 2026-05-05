@@ -86,10 +86,13 @@
     outline-color: var(--ring);
   }
 
+  html {
+    background: transparent;
+  }
+
   body {
     @apply text-foreground;
     background: transparent;
-    backdrop-filter: blur(8px);
   }
 }
 
@@ -323,6 +326,30 @@ main {
   }
 }
 
+/* ── Animated CTA Background Lines keyframes ── */
+@keyframes ctaGradientShift {
+  0%   { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(30deg); }
+}
+
+@keyframes lineMove {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes cornerLineAnimation {
+  0%   { stroke-dashoffset: 0; }
+  25%  { stroke-dashoffset: 100; }
+  50%  { stroke-dashoffset: 200; }
+  75%  { stroke-dashoffset: 300; }
+  100% { stroke-dashoffset: 400; }
+}
+
+@keyframes gridMove {
+  0%   { background-position: 0 0; }
+  100% { background-position: 50px 50px; }
+}
+
 @keyframes floatOrb {
 
   0%,
@@ -504,3 +531,35 @@ main {
 
 
 /* Theme variables moved to top */
+
+/* ── Solar-system skills animations ── */
+@keyframes solarBreathe {
+  0%, 100% { opacity: 0.7;  transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.12); }
+}
+
+@keyframes solarPulse {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50%      { opacity: 0.75; transform: scale(1.15); }
+}
+
+@keyframes solarPanelEnter {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.solar-breathe {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: solarBreathe 3.5s ease-in-out infinite;
+}
+
+.solar-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: solarPulse 2.2s ease-in-out infinite;
+}
+
+.skills-panel-enter {
+  animation: solarPanelEnter 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
