@@ -9,8 +9,7 @@ export default function Projects() {
         title: 'Vidcast',
         description:
           'A full-stack video streaming platform with upload, search, likes, comments, subscriptions and playlist management.',
-        imageSrc:
-          'https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=800&q=80',
+        imageSrc: '/images/vidcast.png',
         href: 'https://vidcast12.vercel.app',
         tag: 'Full Stack',
       },
@@ -19,8 +18,7 @@ export default function Projects() {
         title: 'BusEase',
         description:
           'A bus ticket booking system with virtual credit cards, interactive seat selection and full booking history.',
-        imageSrc:
-          'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800&q=80',
+        imageSrc: '/images/busease.png',
         href: 'https://bus-ease-omega.vercel.app',
         tag: 'Full Stack',
       },
@@ -29,8 +27,7 @@ export default function Projects() {
         title: 'Bankruptcy Prediction',
         description:
           'ML classification model predicting company bankruptcy likelihood using financial ratios and ensemble methods.',
-        imageSrc:
-          'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=800&q=80',
+        imageSrc: '/images/bankcruptcy.png',
         href: 'https://github.com/Nikhil-X-codes/Company-Bankruptcy-Prediction',
         tag: 'Machine Learning',
       },
@@ -39,8 +36,7 @@ export default function Projects() {
         title: 'AI Blog Generation',
         description:
           'AI-powered blogging platform generating complete posts with images, tone control, live editing and export.',
-        imageSrc:
-          'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80',
+        imageSrc: '/images/aiblog.png',
         href: 'https://ai-blog-generate.vercel.app',
         tag: 'AI / Full Stack',
       },

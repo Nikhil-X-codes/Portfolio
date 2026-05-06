@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react'
-import { Sparkles, Palette } from 'lucide-react'
+import { Palette } from 'lucide-react'
 import {
   SiJavascript, SiPython, SiPostgresql, SiCplusplus,
   SiReact, SiNextdotjs, SiNodedotjs, SiExpress, SiTailwindcss,
   SiMongodb, SiSupabase, SiNumpy, SiPandas, SiScikitlearn, SiPytorch,
   SiPostman, SiHuggingface, SiJest, SiGit, SiGithub,
-  SiOpenai, SiDiagramsdotnet
 } from 'react-icons/si'
 
 /* ── layout constants ── */
-const CX = 300, CY = 300, SVG_SIZE = 600
+const CX = 360, CY = 360, SVG_SIZE = 720
 
 /* ── categories as "planets" on separate orbits ── */
 const categories = [
@@ -17,7 +16,7 @@ const categories = [
     id: 'languages',
     label: 'Languages',
     color: '#5DCAA5',
-    orbitR: 80,
+    orbitR: 100,
     angle: 300,
     dotDur: 18,
     skills: [
@@ -31,7 +30,7 @@ const categories = [
     id: 'frontend',
     label: 'Development',
     color: '#AFA9EC',
-    orbitR: 125,
+    orbitR: 160,
     angle: 55,
     dotDur: 26,
     skills: [
@@ -46,7 +45,7 @@ const categories = [
     id: 'databases',
     label: 'Databases',
     color: '#F0997B',
-    orbitR: 170,
+    orbitR: 215,
     angle: 150,
     dotDur: 34,
     skills: [
@@ -59,7 +58,7 @@ const categories = [
     id: 'datascience',
     label: 'Data Science',
     color: '#85B7EB',
-    orbitR: 215,
+    orbitR: 270,
     angle: 230,
     dotDur: 42,
     skills: [
@@ -73,7 +72,7 @@ const categories = [
     id: 'tools',
     label: 'Tools & Platforms',
     color: '#FAC775',
-    orbitR: 260,
+    orbitR: 325,
     angle: 340,
     dotDur: 52,
     skills: [
@@ -86,15 +85,12 @@ const categories = [
   },
 ]
 
-const exploring = [
-  { name: 'AI/ML',                  icon: SiOpenai },
-  { name: 'Scalable System Design', icon: SiDiagramsdotnet },
-]
+
 
 /* ── helpers ── */
 const rad = d => (d * Math.PI) / 180
-const px  = (r, a) => CX + r * Math.sin(rad(a))
-const py  = (r, a) => CY - r * Math.cos(rad(a))
+const ptX = (r, a) => CX + r * Math.sin(rad(a))
+const ptY = (r, a) => CY - r * Math.cos(rad(a))
 
 /* SVG circular path for animateMotion (two-arc full circle) */
 function orbitPathD(r) {
@@ -103,23 +99,23 @@ function orbitPathD(r) {
 
 /* ── Planet node ── */
 function Planet({ cat, isActive, onClick }) {
-  const x = px(cat.orbitR, cat.angle)
-  const y = py(cat.orbitR, cat.angle)
-  const R = 22
+  const x = ptX(cat.orbitR, cat.angle)
+  const y = ptY(cat.orbitR, cat.angle)
+  const R = isActive ? 30 : 22
 
   return (
     <g onClick={() => onClick(cat.id)} style={{ cursor: 'pointer' }}>
       {/* outer glow when active */}
       {isActive && (
-        <circle cx={x} cy={y} r={R + 16} fill={cat.color + '18'} className="solar-pulse" />
+        <circle cx={x} cy={y} r={R + 18} fill={cat.color + '18'} className="solar-pulse" />
       )}
       {/* planet body */}
       <circle
         cx={x} cy={y} r={R}
         fill={isActive ? cat.color : 'rgba(255,255,255,0.04)'}
         stroke={cat.color}
-        strokeWidth={isActive ? 2 : 1}
-        style={{ transition: 'fill .35s, stroke-width .35s' }}
+        strokeWidth={isActive ? 2.5 : 1}
+        style={{ transition: 'all .4s cubic-bezier(.22,1,.36,1)' }}
       />
       {/* abbreviation */}
       <text
@@ -134,7 +130,7 @@ function Planet({ cat, isActive, onClick }) {
       </text>
       {/* label */}
       <text
-        x={x} y={y + R + 18}
+        x={x} y={y + (isActive ? 30 : 22) + 18}
         textAnchor="middle"
         fill={isActive ? cat.color : 'rgba(255,255,255,0.38)'}
         fontSize={10} fontWeight={500}
@@ -143,6 +139,86 @@ function Planet({ cat, isActive, onClick }) {
       >
         {cat.label}
       </text>
+    </g>
+  )
+}
+
+/* ── Skill satellite nodes that orbit around a clicked planet ── */
+function SkillSatellites({ cat, mounted }) {
+  const planetX = ptX(cat.orbitR, cat.angle)
+  const planetY = ptY(cat.orbitR, cat.angle)
+  const satDist = 72
+  const skills = cat.skills
+  const angleStep = 360 / skills.length
+  const nodeR = 18
+
+  return (
+    <g>
+      {skills.map((skill, i) => {
+        const Icon = skill.icon
+        const angleDeg = -90 + i * angleStep
+        const angleR = angleDeg * Math.PI / 180
+        const sx = planetX + satDist * Math.cos(angleR)
+        const sy = planetY + satDist * Math.sin(angleR)
+
+        return (
+          <g
+            key={skill.name}
+            className="skill-satellite-node"
+            style={{
+              transformOrigin: `${planetX}px ${planetY}px`,
+              transformBox: 'view-box',
+              opacity: mounted ? 1 : 0,
+              transform: mounted ? 'scale(1)' : 'scale(0)',
+              transition: `opacity .35s ${i * 0.07}s, transform .45s ${i * 0.07}s cubic-bezier(0.34, 1.56, 0.64, 1)`,
+            }}
+          >
+            {/* connection line */}
+            <line
+              x1={planetX} y1={planetY} x2={sx} y2={sy}
+              stroke={cat.color} strokeWidth={0.7} opacity={0.25}
+              strokeDasharray="3 2"
+            />
+            {/* glow */}
+            <circle cx={sx} cy={sy} r={nodeR + 5} fill={cat.color + '0c'} />
+            {/* node body */}
+            <circle
+              cx={sx} cy={sy} r={nodeR}
+              fill="rgba(10,14,20,0.92)"
+              stroke={cat.color + '50'}
+              strokeWidth={1}
+            />
+            {/* icon via foreignObject */}
+            <foreignObject
+              x={sx - 9} y={sy - 9}
+              width={18} height={18}
+              style={{ overflow: 'visible' }}
+            >
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '100%',
+                height: '100%',
+              }}>
+                <Icon style={{ width: 13, height: 13, color: cat.color }} />
+              </div>
+            </foreignObject>
+            {/* label */}
+            <text
+              x={sx} y={sy + nodeR + 13}
+              textAnchor="middle"
+              fill={cat.color}
+              fontSize={7} fontWeight={500}
+              fontFamily="Inter, sans-serif"
+              opacity={0.9}
+              style={{ letterSpacing: '0.02em' }}
+            >
+              {skill.name}
+            </text>
+          </g>
+        )
+      })}
     </g>
   )
 }
@@ -180,152 +256,93 @@ export default function Skills() {
           <div className="ui-divider"></div>
         </div>
 
-        {/* Solar system + detail panel */}
-        <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8 mb-6">
-
-          {/* ── SVG solar system ── */}
-          <div className="w-full lg:w-auto flex-shrink-0 scroll-animate from-left" style={{ maxWidth: 600 }}>
-            <svg
-              viewBox={`0 0 ${SVG_SIZE} ${SVG_SIZE}`}
-              width="100%"
-              style={{ display: 'block', overflow: 'visible' }}
-            >
-              <defs>
-                {/* sun glow gradient */}
-                <radialGradient id="solar-glow">
-                  <stop offset="0%"   stopColor="rgba(251,191,36,0.18)" />
-                  <stop offset="100%" stopColor="rgba(251,191,36,0)" />
-                </radialGradient>
-                <radialGradient id="solar-core">
-                  <stop offset="0%"   stopColor="#fbbf24" />
-                  <stop offset="60%"  stopColor="#f59e0b" />
-                  <stop offset="100%" stopColor="#d97706" />
-                </radialGradient>
-                {/* orbit paths for traveling dots */}
-                {categories.map(cat => (
-                  <path key={cat.id} id={`orbit-${cat.id}`} d={orbitPathD(cat.orbitR)} fill="none" />
-                ))}
-              </defs>
-
-              {/* ── orbit rings ── */}
-              {categories.map((cat, i) => (
-                <circle
-                  key={cat.id}
-                  cx={CX} cy={CY} r={cat.orbitR}
-                  fill="none"
-                  stroke={active === cat.id ? cat.color + '30' : 'rgba(255,255,255,0.06)'}
-                  strokeWidth={active === cat.id ? 1.2 : 0.6}
-                  strokeDasharray={active === cat.id ? 'none' : `${3 + i} ${7 + i * 2}`}
-                  style={{ transition: 'stroke .4s, stroke-width .4s' }}
-                />
-              ))}
-
-              {/* ── traveling particle dots ── */}
+        {/* Solar system — centered, full width */}
+        <div className="mx-auto mb-8 scroll-animate from-scale" style={{ maxWidth: 640 }}>
+          <svg
+            viewBox={`0 0 ${SVG_SIZE} ${SVG_SIZE}`}
+            width="100%"
+            style={{ display: 'block', overflow: 'visible' }}
+          >
+            <defs>
+              {/* sun glow gradient */}
+              <radialGradient id="solar-glow">
+                <stop offset="0%"   stopColor="rgba(251,191,36,0.18)" />
+                <stop offset="100%" stopColor="rgba(251,191,36,0)" />
+              </radialGradient>
+              <radialGradient id="solar-core">
+                <stop offset="0%"   stopColor="#fbbf24" />
+                <stop offset="60%"  stopColor="#f59e0b" />
+                <stop offset="100%" stopColor="#d97706" />
+              </radialGradient>
+              {/* orbit paths for traveling dots */}
               {categories.map(cat => (
-                <g key={`dot-${cat.id}`}>
-                  <circle r={2.2} fill={cat.color} opacity={0.55}>
-                    <animateMotion dur={`${cat.dotDur}s`} repeatCount="indefinite">
-                      <mpath href={`#orbit-${cat.id}`} />
-                    </animateMotion>
-                  </circle>
-                  {/* second dot offset */}
-                  <circle r={1.5} fill={cat.color} opacity={0.3}>
-                    <animateMotion dur={`${cat.dotDur}s`} begin={`${cat.dotDur / 2}s`} repeatCount="indefinite">
-                      <mpath href={`#orbit-${cat.id}`} />
-                    </animateMotion>
-                  </circle>
-                </g>
+                <path key={cat.id} id={`orbit-${cat.id}`} d={orbitPathD(cat.orbitR)} fill="none" />
               ))}
+            </defs>
 
-              {/* ── planet nodes ── */}
-              {categories.map(cat => (
-                <Planet
-                  key={cat.id}
-                  cat={cat}
-                  isActive={active === cat.id}
-                  onClick={id => setActive(prev => (prev === id ? null : id))}
-                />
-              ))}
+            {/* ── orbit rings ── */}
+            {categories.map((cat, i) => (
+              <circle
+                key={cat.id}
+                cx={CX} cy={CY} r={cat.orbitR}
+                fill="none"
+                stroke={active === cat.id ? cat.color + '55' : 'rgba(255,255,255,0.12)'}
+                strokeWidth={active === cat.id ? 1.8 : 1}
+                strokeDasharray={active === cat.id ? 'none' : `${5 + i} ${9 + i * 2}`}
+                style={{ transition: 'stroke .4s, stroke-width .4s' }}
+              />
+            ))}
 
-              {/* ── sun centre ── */}
-              <circle cx={CX} cy={CY} r={52} fill="url(#solar-glow)" className="solar-breathe" />
-              <circle cx={CX} cy={CY} r={26} fill="url(#solar-core)" />
-              <circle cx={CX} cy={CY} r={26} fill="none" stroke="rgba(251,191,36,0.25)" strokeWidth={1} />
-              <text x={CX} y={CY - 4} textAnchor="middle"
-                fill="rgba(15,10,5,0.85)" fontSize={8.5}
-                fontFamily="Inter, sans-serif" fontWeight={700} letterSpacing="0.14em"
-              >STACK</text>
-              <text x={CX} y={CY + 8} textAnchor="middle"
-                fill="rgba(15,10,5,0.5)" fontSize={7}
-                fontFamily="Inter, sans-serif"
-              >click a planet</text>
-            </svg>
-          </div>
+            {/* ── traveling particle dots ── */}
+            {categories.map(cat => (
+              <g key={`dot-${cat.id}`}>
+                <circle r={2.2} fill={cat.color} opacity={0.55}>
+                  <animateMotion dur={`${cat.dotDur}s`} repeatCount="indefinite">
+                    <mpath href={`#orbit-${cat.id}`} />
+                  </animateMotion>
+                </circle>
+                {/* second dot offset */}
+                <circle r={1.5} fill={cat.color} opacity={0.3}>
+                  <animateMotion dur={`${cat.dotDur}s`} begin={`${cat.dotDur / 2}s`} repeatCount="indefinite">
+                    <mpath href={`#orbit-${cat.id}`} />
+                  </animateMotion>
+                </circle>
+              </g>
+            ))}
 
-          {/* ── Detail panel ── */}
-          <div className="flex-1 w-full scroll-animate from-right">
-            {activeCat ? (
-              <div
-                key={activeCat.id}
-                className="ui-card p-6 h-full skills-panel-enter"
-                style={{ borderColor: activeCat.color + '33', minHeight: 360 }}
-              >
-                <div className="flex items-center gap-3 mb-6">
-                  <div
-                    className="w-2 h-8 rounded-full flex-shrink-0"
-                    style={{ background: activeCat.color, boxShadow: `0 0 14px ${activeCat.color}66` }}
-                  />
-                  <h3 className="text-xl font-semibold text-slate-100">{activeCat.label}</h3>
-                </div>
+            {/* ── planet nodes ── */}
+            {categories.map(cat => (
+              <Planet
+                key={cat.id}
+                cat={cat}
+                isActive={active === cat.id}
+                onClick={id => setActive(prev => (prev === id ? null : id))}
+              />
+            ))}
 
-                <div className="flex flex-col gap-3.5">
-                  {activeCat.skills.map((skill, i) => {
-                    const Icon = skill.icon
-                    return (
-                      <div
-                        key={skill.name}
-                        className="flex items-center gap-3"
-                        style={{
-                          opacity: mounted ? 1 : 0,
-                          transform: mounted ? 'translateX(0)' : 'translateX(-14px)',
-                          transition: `opacity .38s ${i * .08}s, transform .38s ${i * .08}s`,
-                        }}
-                      >
-                        <div
-                          className="flex items-center justify-center w-8 h-8 rounded-lg flex-shrink-0"
-                          style={{ background: activeCat.color + '18', border: `1px solid ${activeCat.color}44` }}
-                        >
-                          <Icon style={{ width: 15, height: 15, color: activeCat.color }} />
-                        </div>
-                        <span className="text-slate-200 text-sm font-medium w-28 flex-shrink-0">{skill.name}</span>
-                        <div className="flex-1 h-px bg-white/5 relative overflow-hidden rounded-full">
-                          <div style={{
-                            position: 'absolute', inset: 0,
-                            background: `linear-gradient(90deg, ${activeCat.color}, ${activeCat.color}88)`,
-                            width: mounted ? '100%' : '0%',
-                            transition: `width .65s ${i * .08 + .18}s cubic-bezier(.22,1,.36,1)`,
-                          }} />
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-
-                <p className="mt-6 text-xs text-slate-500 tracking-widest uppercase">
-                  {activeCat.skills.length} technologies
-                </p>
-              </div>
-            ) : (
-              <div className="ui-card p-6 flex items-center justify-center min-h-[360px]">
-                <p className="text-slate-500 text-sm">Select a planet to explore</p>
-              </div>
+            {/* ── skill satellites around the active planet ── */}
+            {activeCat && (
+              <SkillSatellites key={activeCat.id} cat={activeCat} mounted={mounted} />
             )}
-          </div>
+
+            {/* ── sun centre ── */}
+            <circle cx={CX} cy={CY} r={52} fill="url(#solar-glow)" className="solar-breathe" />
+            <circle cx={CX} cy={CY} r={26} fill="url(#solar-core)" />
+            <circle cx={CX} cy={CY} r={26} fill="none" stroke="rgba(251,191,36,0.25)" strokeWidth={1} />
+            <text x={CX} y={CY - 4} textAnchor="middle"
+              fill="rgba(15,10,5,0.85)" fontSize={8.5}
+              fontFamily="Inter, sans-serif" fontWeight={700} letterSpacing="0.14em"
+            >STACK</text>
+            <text x={CX} y={CY + 8} textAnchor="middle"
+              fill="rgba(15,10,5,0.5)" fontSize={7}
+              fontFamily="Inter, sans-serif"
+            >click a planet</text>
+          </svg>
         </div>
 
         {/* ── Bottom row ── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <article className="ui-card scroll-animate from-left md:col-span-2 p-6">
+        <div className="max-w-2xl mx-auto">
+          <article className="ui-card scroll-animate from-bottom p-6">
             <div className="flex items-center gap-3 mb-4">
               <div className="rounded-lg border border-gray-600/40 bg-gray-900/30 p-2">
                 <Palette className="h-5 w-5 text-gray-300" />
@@ -341,26 +358,6 @@ export default function Skills() {
               <code className="text-sm sm:text-base text-gray-300 whitespace-pre">
                 {`while (!success) {\n  learn();\n  build();\n  improve();\n}`}
               </code>
-            </div>
-          </article>
-
-          <article className="ui-card scroll-animate from-right p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="rounded-lg border border-gray-600/40 bg-gray-900/30 p-2">
-                <Sparkles className="h-5 w-5 text-gray-300" />
-              </div>
-              <h3 className="text-xl font-semibold text-slate-100">Currently Exploring</h3>
-            </div>
-            <div className="flex flex-wrap gap-2.5">
-              {exploring.map(item => {
-                const ItemIcon = item.icon
-                return (
-                  <span key={item.name} className="ui-pill flex items-center gap-2 px-4 py-1.5 text-sm font-medium">
-                    <ItemIcon className="h-4 w-4" />
-                    {item.name}
-                  </span>
-                )
-              })}
             </div>
           </article>
         </div>
