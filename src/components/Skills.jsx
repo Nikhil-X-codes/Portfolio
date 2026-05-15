@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Palette } from 'lucide-react'
+import DecryptedText from './ui/DecryptedText'
 import {
   SiJavascript, SiPython, SiPostgresql, SiCplusplus,
   SiReact, SiNextdotjs, SiNodedotjs, SiExpress, SiTailwindcss,
@@ -8,7 +9,7 @@ import {
 } from 'react-icons/si'
 
 /* ── layout constants ── */
-const CX = 360, CY = 360, SVG_SIZE = 720
+const CX = 480, CY = 480, SVG_SIZE = 960
 
 /* ── categories as "planets" on separate orbits ── */
 const categories = [
@@ -20,8 +21,8 @@ const categories = [
     angle: 300,
     dotDur: 18,
     skills: [
-      { name: 'JavaScript', icon: SiJavascript },
-      { name: 'Python',     icon: SiPython },
+      { name: 'JavaScript', icon: SiJavascript, repo: 'https://github.com/tc39/ecma262' },
+      { name: 'Python',     icon: SiPython,     repo: 'https://github.com/python/cpython' },
       { name: 'SQL',        icon: SiPostgresql },
       { name: 'C++',        icon: SiCplusplus },
     ],
@@ -34,11 +35,11 @@ const categories = [
     angle: 55,
     dotDur: 26,
     skills: [
-      { name: 'React',        icon: SiReact },
-      { name: 'Next.js',      icon: SiNextdotjs },
-      { name: 'Node.js',      icon: SiNodedotjs },
-      { name: 'Express',      icon: SiExpress },
-      { name: 'Tailwind CSS', icon: SiTailwindcss },
+      { name: 'React',        icon: SiReact,        repo: 'https://github.com/facebook/react' },
+      { name: 'Next.js',      icon: SiNextdotjs,    repo: 'https://github.com/vercel/next.js' },
+      { name: 'Node.js',      icon: SiNodedotjs,    repo: 'https://github.com/nodejs/node' },
+      { name: 'Express',      icon: SiExpress,      repo: 'https://github.com/expressjs/express' },
+      { name: 'Tailwind CSS', icon: SiTailwindcss, repo: 'https://github.com/tailwindlabs/tailwindcss' },
     ],
   },
   {
@@ -49,9 +50,9 @@ const categories = [
     angle: 150,
     dotDur: 34,
     skills: [
-      { name: 'PostgreSQL', icon: SiPostgresql },
-      { name: 'MongoDB',    icon: SiMongodb },
-      { name: 'Supabase',   icon: SiSupabase },
+      { name: 'PostgreSQL', icon: SiPostgresql, repo: 'https://github.com/postgres/postgres' },
+      { name: 'MongoDB',    icon: SiMongodb,    repo: 'https://github.com/mongodb/mongo' },
+      { name: 'Supabase',   icon: SiSupabase,   repo: 'https://github.com/supabase/supabase' },
     ],
   },
   {
@@ -62,10 +63,10 @@ const categories = [
     angle: 230,
     dotDur: 42,
     skills: [
-      { name: 'NumPy',        icon: SiNumpy },
-      { name: 'Pandas',       icon: SiPandas },
-      { name: 'scikit-learn', icon: SiScikitlearn },
-      { name: 'PyTorch',      icon: SiPytorch },
+      { name: 'NumPy',        icon: SiNumpy,        repo: 'https://github.com/numpy/numpy' },
+      { name: 'Pandas',       icon: SiPandas,       repo: 'https://github.com/pandas-dev/pandas' },
+      { name: 'scikit-learn', icon: SiScikitlearn, repo: 'https://github.com/scikit-learn/scikit-learn' },
+      { name: 'PyTorch',      icon: SiPytorch,      repo: 'https://github.com/pytorch/pytorch' },
     ],
   },
   {
@@ -77,9 +78,9 @@ const categories = [
     dotDur: 52,
     skills: [
       { name: 'Postman',     icon: SiPostman },
-      { name: 'HuggingFace', icon: SiHuggingface },
-      { name: 'Jest',        icon: SiJest },
-      { name: 'Git',         icon: SiGit },
+      { name: 'HuggingFace', icon: SiHuggingface, repo: 'https://github.com/huggingface/transformers' },
+      { name: 'Jest',        icon: SiJest,        repo: 'https://github.com/jestjs/jest' },
+      { name: 'Git',         icon: SiGit,         repo: 'https://github.com/git/git' },
       { name: 'GitHub',      icon: SiGithub },
     ],
   },
@@ -99,99 +100,101 @@ function orbitPathD(r) {
 
 /* ── Planet node ── */
 function Planet({ cat, isActive, onClick }) {
-  const x = ptX(cat.orbitR, cat.angle)
-  const y = ptY(cat.orbitR, cat.angle)
-  const R = isActive ? 30 : 22
+  const x = ptX(cat.orbitR, cat.angle);
+  const y = ptY(cat.orbitR, cat.angle);
+  const R = isActive ? 38 : 24;
 
   return (
     <g onClick={() => onClick(cat.id)} style={{ cursor: 'pointer' }}>
       {/* outer glow when active */}
       {isActive && (
-        <circle cx={x} cy={y} r={R + 18} fill={cat.color + '18'} className="solar-pulse" />
+        <circle cx={x} cy={y} r={R + 22} fill={cat.color + '18'} className="solar-pulse" />
       )}
       {/* planet body */}
       <circle
         cx={x} cy={y} r={R}
         fill={isActive ? cat.color : 'rgba(255,255,255,0.04)'}
         stroke={cat.color}
-        strokeWidth={isActive ? 2.5 : 1}
+        strokeWidth={isActive ? 3 : 1}
         style={{ transition: 'all .4s cubic-bezier(.22,1,.36,1)' }}
       />
       {/* abbreviation */}
       <text
-        x={x} y={y + 4.5}
+        x={x} y={y + (isActive ? 5.5 : 4.5)}
         textAnchor="middle"
         fill={isActive ? '#0a0e14' : cat.color}
-        fontSize={11} fontWeight={700}
+        fontSize={isActive ? 15 : 11} fontWeight={800}
         fontFamily="Inter, sans-serif"
-        style={{ transition: 'fill .35s', pointerEvents: 'none', userSelect: 'none' }}
+        style={{ transition: 'all .35s', pointerEvents: 'none', userSelect: 'none' }}
       >
         {cat.label.slice(0, 2).toUpperCase()}
       </text>
       {/* label */}
       <text
-        x={x} y={y + (isActive ? 30 : 22) + 18}
+        x={x} y={y + (isActive ? 38 : 24) + 18}
         textAnchor="middle"
         fill={isActive ? cat.color : 'rgba(255,255,255,0.38)'}
-        fontSize={10} fontWeight={500}
+        fontSize={isActive ? 12 : 10} fontWeight={600}
         fontFamily="Inter, sans-serif"
-        style={{ transition: 'fill .35s', letterSpacing: '.04em' }}
+        style={{ transition: 'all .35s', letterSpacing: '.04em' }}
       >
         {cat.label}
       </text>
     </g>
-  )
+  );
 }
 
-/* ── Skill satellite nodes that orbit around a clicked planet ── */
+/* ── Skill satellite nodes scaled up for absolute clarity and visual prominence ── */
 function SkillSatellites({ cat, mounted }) {
-  const planetX = ptX(cat.orbitR, cat.angle)
-  const planetY = ptY(cat.orbitR, cat.angle)
-  const satDist = 72
-  const skills = cat.skills
-  const angleStep = 360 / skills.length
-  const nodeR = 18
+  const planetX = ptX(cat.orbitR, cat.angle);
+  const planetY = ptY(cat.orbitR, cat.angle);
+  const satDist = 95;
+  const skills = cat.skills;
+  const angleStep = 360 / skills.length;
+  const nodeR = 26;
 
   return (
     <g>
       {skills.map((skill, i) => {
-        const Icon = skill.icon
-        const angleDeg = -90 + i * angleStep
-        const angleR = angleDeg * Math.PI / 180
-        const sx = planetX + satDist * Math.cos(angleR)
-        const sy = planetY + satDist * Math.sin(angleR)
+        const Icon = skill.icon;
+        const angleDeg = -90 + i * angleStep;
+        const angleR = (angleDeg * Math.PI) / 180;
+        const sx = planetX + satDist * Math.cos(angleR);
+        const sy = planetY + satDist * Math.sin(angleR);
 
         return (
           <g
             key={skill.name}
             className="skill-satellite-node"
+            onClick={() => skill.repo && window.open(skill.repo, '_blank')}
             style={{
               transformOrigin: `${planetX}px ${planetY}px`,
               transformBox: 'view-box',
               opacity: mounted ? 1 : 0,
               transform: mounted ? 'scale(1)' : 'scale(0)',
               transition: `opacity .35s ${i * 0.07}s, transform .45s ${i * 0.07}s cubic-bezier(0.34, 1.56, 0.64, 1)`,
+              cursor: skill.repo ? 'pointer' : 'default',
             }}
           >
             {/* connection line */}
             <line
               x1={planetX} y1={planetY} x2={sx} y2={sy}
-              stroke={cat.color} strokeWidth={0.7} opacity={0.25}
+              stroke={cat.color} strokeWidth={1} opacity={0.35}
               strokeDasharray="3 2"
             />
             {/* glow */}
-            <circle cx={sx} cy={sy} r={nodeR + 5} fill={cat.color + '0c'} />
+            <circle cx={sx} cy={sy} r={nodeR + 6} fill={cat.color + '12'} />
             {/* node body */}
             <circle
               cx={sx} cy={sy} r={nodeR}
-              fill="rgba(10,14,20,0.92)"
-              stroke={cat.color + '50'}
-              strokeWidth={1}
+              fill="rgba(10,14,20,0.95)"
+              stroke={cat.color + '80'}
+              strokeWidth={1.5}
             />
             {/* icon via foreignObject */}
             <foreignObject
-              x={sx - 9} y={sy - 9}
-              width={18} height={18}
+              x={sx - 13} y={sy - 13}
+              width={26} height={26}
               style={{ overflow: 'visible' }}
             >
               <div style={{
@@ -201,31 +204,31 @@ function SkillSatellites({ cat, mounted }) {
                 width: '100%',
                 height: '100%',
               }}>
-                <Icon style={{ width: 13, height: 13, color: cat.color }} />
+                <Icon style={{ width: 17, height: 17, color: cat.color }} />
               </div>
             </foreignObject>
             {/* label */}
             <text
-              x={sx} y={sy + nodeR + 13}
+              x={sx} y={sy + nodeR + 15}
               textAnchor="middle"
               fill={cat.color}
-              fontSize={7} fontWeight={500}
+              fontSize={11} fontWeight={700}
               fontFamily="Inter, sans-serif"
-              opacity={0.9}
-              style={{ letterSpacing: '0.02em' }}
+              opacity={1}
+              style={{ letterSpacing: '0.03em' }}
             >
               {skill.name}
             </text>
           </g>
-        )
+        );
       })}
     </g>
-  )
+  );
 }
 
 /* ────────────────────────────────────────── */
 export default function Skills() {
-  const [active, setActive]     = useState('frontend')
+  const [active, setActive]     = useState(null)
   const [mounted, setMounted]   = useState(false)
   const [prevActive, setPrevActive] = useState(null)
 
@@ -252,12 +255,14 @@ export default function Skills() {
         {/* Header */}
         <div className="mb-10 sm:mb-12 scroll-animate from-bottom">
           <p className="ui-kicker mb-2">Technical Stack</p>
-          <h2 className="ui-title mb-3">The Toolkit</h2>
+          <h2 className="ui-title mb-3">
+            <DecryptedText text="The Toolkit" animateOn="inViewHover" revealDirection="center" speed={55} maxIterations={12} />
+          </h2>
           <div className="ui-divider"></div>
         </div>
 
         {/* Solar system — centered, full width */}
-        <div className="mx-auto mb-8 scroll-animate from-scale" style={{ maxWidth: 640 }}>
+        <div className="mx-auto mb-8 scroll-animate from-scale" style={{ maxWidth: 780 }}>
           <svg
             viewBox={`0 0 ${SVG_SIZE} ${SVG_SIZE}`}
             width="100%"

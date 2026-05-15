@@ -1,6 +1,5 @@
-@import "tailwindcss";
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
 
 
 :root {
@@ -87,12 +86,12 @@
   }
 
   html {
-    background: transparent;
+    background: #060610;
   }
 
   body {
     @apply text-foreground;
-    background: transparent;
+    background: #060610;
   }
 }
 
@@ -214,7 +213,7 @@ main {
   height: 100%;
   width: 35%;
   border-radius: 999px;
-  background: linear-gradient(90deg, #22d3ee, #6d28d9, #22d3ee);
+  background: linear-gradient(90deg, #3b82f6, #6366f1, #3b82f6);
   background-size: 200% 100%;
   animation: loadingMove 950ms ease-in-out infinite;
 }
@@ -270,35 +269,35 @@ main {
 
 
 
-/* Scroll Animations - Elements come from corners */
+/* Scroll Animations - Smooth section reveals */
 .scroll-animate {
   opacity: 0;
-  transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
 }
 
 .scroll-animate.from-left {
-  transform: translateX(-38px) translateY(24px);
+  transform: translateX(-30px) translateY(16px);
 }
 
 .scroll-animate.from-right {
-  transform: translateX(38px) translateY(24px);
+  transform: translateX(30px) translateY(16px);
 }
 
 .scroll-animate.from-top-left {
-  transform: translateX(-100px) translateY(-50px);
+  transform: translateX(-60px) translateY(-30px);
 }
 
 .scroll-animate.from-top-right {
-  transform: translateX(100px) translateY(-50px);
+  transform: translateX(60px) translateY(-30px);
 }
 
 .scroll-animate.from-bottom {
-  transform: translateY(30px);
+  transform: translateY(24px);
 }
 
 .scroll-animate.from-scale {
-  transform: scale(0.94);
+  transform: scale(0.96);
 }
 
 .scroll-animate.animate-in {

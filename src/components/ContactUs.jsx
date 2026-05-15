@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import emailjs from '@emailjs/browser'
+import DecryptedText from './ui/DecryptedText'
 
 export default function ContactUs() {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
@@ -49,11 +50,13 @@ export default function ContactUs() {
   }
 
   return (
-    <section id="contact" className="relative ui-section pb-16 overflow-hidden">
+    <section id="contact" className="relative ui-section pb-28 overflow-hidden">
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mb-10 sm:mb-12 scroll-animate from-bottom">
           <p className="ui-kicker mb-2">Let&apos;s Collaborate</p>
-          <h2 className="ui-title mb-3">Contact Me</h2>
+          <h2 className="ui-title mb-3">
+            <DecryptedText text="Contact Me" animateOn="inViewHover" revealDirection="center" speed={55} maxIterations={12} />
+          </h2>
           <div className="ui-divider"></div>
         </div>
       <form ref={formRef} className="ui-card mt-8 grid gap-4 sm:max-w-xl p-5 sm:p-6 scroll-animate from-left" onSubmit={handleSubmit}>

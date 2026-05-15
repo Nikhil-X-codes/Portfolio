@@ -1,101 +1,100 @@
-import { useEffect, useState } from 'react'
-import { Menu, X, Home, FolderGit2, Code2, Mail } from 'lucide-react'
+import { motion } from 'framer-motion';
+import { Home, FolderGit2, Code2, Trophy, Mail, Github, Linkedin, GraduationCap } from 'lucide-react';
+
+// Custom Codolio brackets icon as SVG — matches lucide icon sizing
+const CodeBracketsIcon = ({ className }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <polyline points="7 8 3 12 7 16" />
+    <polyline points="17 8 21 12 17 16" />
+    <line x1="14" y1="4" x2="10" y2="20" />
+  </svg>
+);
 
 export default function Navbar() {
-  const [mobileOpen, setMobileOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 14)
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
   const navItems = [
-    { id: 'home',     label: 'Home',       icon: Home },
-    { id: 'projects', label: 'Projects',   icon: FolderGit2 },
-    { id: 'about',    label: 'Tech Stack', icon: Code2 },
-    { id: 'contact',  label: 'Contact',    icon: Mail },
-  ]
+    { id: 'home', label: 'Home', icon: Home, type: 'nav' },
+    { id: 'projects', label: 'Projects', icon: FolderGit2, type: 'nav' },
+    { id: 'about', label: 'Tech Stack', icon: Code2, type: 'nav' },
+    { id: 'achievements', label: 'Achievements', icon: Trophy, type: 'nav' },
+    { id: 'education', label: 'Education', icon: GraduationCap, type: 'nav' },
+    { id: 'contact', label: 'Contact', icon: Mail, type: 'nav' },
+  ];
+
+  const socialItems = [
+    { id: 'github', label: 'GitHub', icon: Github, type: 'social', href: 'https://github.com/Nikhil-X-codes' },
+    { id: 'linkedin', label: 'LinkedIn', icon: Linkedin, type: 'social', href: 'https://www.linkedin.com/in/nikhil2310' },
+    { id: 'codolio', label: 'Codolio', icon: CodeBracketsIcon, type: 'social', href: 'https://codolio.com/profile/J6G0HHGi' },
+  ];
 
   return (
-    <header
-      className={`sticky top-0 z-50 transition-all duration-500 ease-in-out ${
-        scrolled
-          ? 'border-b border-teal-500/20 bg-black/40 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,210,180,0.08)]'
-          : 'border-b border-transparent bg-transparent backdrop-blur-none'
-      }`}
-    >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-
-          {/* Logo */}
-          <a href="#home" className="flex items-center gap-2 font-semibold group">
-            <span className="relative text-lg font-bold bg-gradient-to-r from-teal-300 via-cyan-200 to-teal-400 bg-clip-text text-transparent transition-all duration-300 group-hover:from-teal-200 group-hover:to-cyan-300">
-              Nikhil Nagar
-            </span>
-            {/* teal underline glow on hover */}
-            <span className="absolute bottom-0 left-0 h-px w-0 bg-teal-400/60 transition-all duration-300 group-hover:w-full" />
-          </a>
-
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-1">
-            {navItems.map(({ id, label, icon: Icon }) => (
-              <a
-                key={id}
-                href={`#${id}`}
-                className="group relative flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm text-teal-100/70 transition-all duration-300 hover:text-teal-300 hover:bg-teal-500/10"
-              >
-                <Icon className="h-4 w-4 text-teal-400/50 transition-all duration-300 group-hover:text-teal-400 group-hover:-translate-y-0.5" />
-                <span>{label}</span>
-                {/* active glow dot */}
-                <span className="absolute bottom-1 left-1/2 -translate-x-1/2 h-0.5 w-0 rounded-full bg-teal-400/70 transition-all duration-300 group-hover:w-4" />
-              </a>
-            ))}
-          </nav>
-
-          {/* Mobile toggle */}
-          <button
-            aria-label="Open menu"
-            className="md:hidden rounded-lg p-2 text-teal-200 hover:bg-teal-500/10 transition-colors duration-200"
-            onClick={() => setMobileOpen(true)}
-          >
-            <Menu className="h-5 w-5" />
-          </button>
+    <header className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none transition-all duration-500 max-w-[95vw]">
+      {/* Floating Glass Bar Container featuring persistent stacked label format */}
+      <motion.div
+        initial={{ y: 50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+        className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-4 py-2 rounded-2xl sm:rounded-full bg-slate-950/90 backdrop-blur-xl border border-white/10 shadow-[0_0_30px_rgba(6,182,212,0.15)] pointer-events-auto transition-all duration-300 hover:border-cyan-500/30 hover:bg-slate-950/95 hover:shadow-[0_0_40px_rgba(6,182,212,0.3)] overflow-x-auto scrollbar-none"
+      >
+        {/* Navigation Section */}
+        <div className="flex items-center gap-0.5 sm:gap-1">
+          {navItems.map((item) => (
+            <DockItem key={item.id} item={item} />
+          ))}
         </div>
-      </div>
 
-      {/* Mobile drawer */}
-      {mobileOpen && (
-        <div className="md:hidden border-t border-teal-500/15 bg-black/75 backdrop-blur-xl">
-          <div className="mx-auto max-w-6xl px-4 py-3">
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-sm font-semibold text-teal-300/80 tracking-widest uppercase">Menu</span>
-              <button
-                aria-label="Close menu"
-                className="rounded-lg p-2 text-teal-200 hover:bg-teal-500/10 transition-colors duration-200"
-                onClick={() => setMobileOpen(false)}
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-            <div className="grid gap-1">
-              {navItems.map(({ id, label, icon: Icon }) => (
-                <a
-                  key={id}
-                  href={`#${id}`}
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-teal-100/80 hover:text-teal-300 hover:bg-teal-500/10 transition-all duration-200"
-                >
-                  <Icon className="h-4 w-4 text-teal-400/60" />
-                  <span className="text-sm font-medium">{label}</span>
-                </a>
-              ))}
-            </div>
-          </div>
+        {/* Vertical Glass Divider */}
+        <div className="w-[1px] h-8 bg-gradient-to-b from-transparent via-slate-700 to-transparent mx-1 sm:mx-2 shrink-0" />
+
+        {/* Social Dock Links */}
+        <div className="flex items-center gap-0.5 sm:gap-1">
+          {socialItems.map((item) => (
+            <DockItem key={item.id} item={item} />
+          ))}
         </div>
-      )}
+      </motion.div>
     </header>
-  )
+  );
+}
+
+function DockItem({ item }) {
+  const Icon = item.icon;
+
+  const content = (
+    <motion.div
+      whileHover={{ scale: 1.12, y: -3 }}
+      whileTap={{ scale: 0.95 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+      className="flex flex-col items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-transparent hover:bg-slate-900/60 border border-transparent hover:border-white/5 text-slate-400 hover:text-cyan-400 transition-all duration-200 cursor-pointer px-1 group shrink-0"
+    >
+      <div className="flex items-center justify-center h-4 sm:h-5">
+        <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-300" />
+      </div>
+      <span className="text-[9px] sm:text-[10px] font-medium tracking-tight mt-1 text-slate-300 group-hover:text-cyan-300 transition-colors leading-none">
+        {item.label}
+      </span>
+    </motion.div>
+  );
+
+  if (item.type === 'social') {
+    return (
+      <a href={item.href} target="_blank" rel="noopener noreferrer" aria-label={item.label} className="block shrink-0">
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <a href={`#${item.id}`} aria-label={item.label} className="block shrink-0">
+      {content}
+    </a>
+  );
 }
