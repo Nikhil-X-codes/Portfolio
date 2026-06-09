@@ -5,7 +5,7 @@ import {
   SiJavascript, SiPython, SiPostgresql, SiCplusplus,
   SiReact, SiNextdotjs, SiNodedotjs, SiExpress, SiTailwindcss,
   SiMongodb, SiSupabase, SiNumpy, SiPandas, SiScikitlearn, SiPytorch,
-  SiPostman, SiHuggingface, SiJest, SiGit, SiGithub,
+  SiPostman, SiHuggingface, SiGithub, SiLangchain, SiChroma, SiDocker, SiFastapi
 } from 'react-icons/si'
 
 /* ── layout constants ── */
@@ -22,9 +22,9 @@ const categories = [
     dotDur: 18,
     skills: [
       { name: 'JavaScript', icon: SiJavascript, repo: 'https://github.com/tc39/ecma262' },
-      { name: 'Python',     icon: SiPython,     repo: 'https://github.com/python/cpython' },
-      { name: 'SQL',        icon: SiPostgresql },
-      { name: 'C++',        icon: SiCplusplus },
+      { name: 'Python', icon: SiPython, repo: 'https://github.com/python/cpython' },
+      { name: 'SQL', icon: SiPostgresql },
+      { name: 'C++', icon: SiCplusplus },
     ],
   },
   {
@@ -35,10 +35,10 @@ const categories = [
     angle: 55,
     dotDur: 26,
     skills: [
-      { name: 'React',        icon: SiReact,        repo: 'https://github.com/facebook/react' },
-      { name: 'Next.js',      icon: SiNextdotjs,    repo: 'https://github.com/vercel/next.js' },
-      { name: 'Node.js',      icon: SiNodedotjs,    repo: 'https://github.com/nodejs/node' },
-      { name: 'Express',      icon: SiExpress,      repo: 'https://github.com/expressjs/express' },
+      { name: 'React', icon: SiReact, repo: 'https://github.com/facebook/react' },
+      { name: 'Next.js', icon: SiNextdotjs, repo: 'https://github.com/vercel/next.js' },
+      { name: 'Node.js', icon: SiNodedotjs, repo: 'https://github.com/nodejs/node' },
+      { name: 'Express', icon: SiExpress, repo: 'https://github.com/expressjs/express' },
       { name: 'Tailwind CSS', icon: SiTailwindcss, repo: 'https://github.com/tailwindlabs/tailwindcss' },
     ],
   },
@@ -51,8 +51,8 @@ const categories = [
     dotDur: 34,
     skills: [
       { name: 'PostgreSQL', icon: SiPostgresql, repo: 'https://github.com/postgres/postgres' },
-      { name: 'MongoDB',    icon: SiMongodb,    repo: 'https://github.com/mongodb/mongo' },
-      { name: 'Supabase',   icon: SiSupabase,   repo: 'https://github.com/supabase/supabase' },
+      { name: 'MongoDB', icon: SiMongodb, repo: 'https://github.com/mongodb/mongo' },
+      { name: 'Supabase', icon: SiSupabase, repo: 'https://github.com/supabase/supabase' },
     ],
   },
   {
@@ -63,10 +63,18 @@ const categories = [
     angle: 230,
     dotDur: 42,
     skills: [
-      { name: 'NumPy',        icon: SiNumpy,        repo: 'https://github.com/numpy/numpy' },
-      { name: 'Pandas',       icon: SiPandas,       repo: 'https://github.com/pandas-dev/pandas' },
+      { name: 'NumPy', icon: SiNumpy, repo: 'https://github.com/numpy/numpy' },
+      { name: 'Pandas', icon: SiPandas, repo: 'https://github.com/pandas-dev/pandas' },
       { name: 'scikit-learn', icon: SiScikitlearn, repo: 'https://github.com/scikit-learn/scikit-learn' },
-      { name: 'PyTorch',      icon: SiPytorch,      repo: 'https://github.com/pytorch/pytorch' },
+      { name: 'PyTorch', icon: SiPytorch, repo: 'https://github.com/pytorch/pytorch' },
+      { name: 'LangChain', icon: SiLangchain, repo: 'https://github.com/langchain-ai/langchain' },
+      { name: 'ChromaDB', icon: SiChroma, repo: 'https://github.com/chroma-core/chroma' },
+      {
+        name: 'FastAPI',
+        icon: SiFastapi,
+        repo: 'https://github.com/fastapi/fastapi'
+      },
+
     ],
   },
   {
@@ -77,11 +85,10 @@ const categories = [
     angle: 340,
     dotDur: 52,
     skills: [
-      { name: 'Postman',     icon: SiPostman },
+      { name: 'Postman', icon: SiPostman },
       { name: 'HuggingFace', icon: SiHuggingface, repo: 'https://github.com/huggingface/transformers' },
-      { name: 'Jest',        icon: SiJest,        repo: 'https://github.com/jestjs/jest' },
-      { name: 'Git',         icon: SiGit,         repo: 'https://github.com/git/git' },
-      { name: 'GitHub',      icon: SiGithub },
+      { name: 'Git & GitHub', icon: SiGithub, repo: 'https://github.com/git/git' },
+      { name: 'Docker', icon: SiDocker, repo: 'https://github.com/docker' },
     ],
   },
 ]
@@ -228,8 +235,8 @@ function SkillSatellites({ cat, mounted }) {
 
 /* ────────────────────────────────────────── */
 export default function Skills() {
-  const [active, setActive]     = useState(null)
-  const [mounted, setMounted]   = useState(false)
+  const [active, setActive] = useState(null)
+  const [mounted, setMounted] = useState(false)
   const [prevActive, setPrevActive] = useState(null)
 
   useEffect(() => {
@@ -271,12 +278,12 @@ export default function Skills() {
             <defs>
               {/* sun glow gradient */}
               <radialGradient id="solar-glow">
-                <stop offset="0%"   stopColor="rgba(251,191,36,0.18)" />
+                <stop offset="0%" stopColor="rgba(251,191,36,0.18)" />
                 <stop offset="100%" stopColor="rgba(251,191,36,0)" />
               </radialGradient>
               <radialGradient id="solar-core">
-                <stop offset="0%"   stopColor="#fbbf24" />
-                <stop offset="60%"  stopColor="#f59e0b" />
+                <stop offset="0%" stopColor="#fbbf24" />
+                <stop offset="60%" stopColor="#f59e0b" />
                 <stop offset="100%" stopColor="#d97706" />
               </radialGradient>
               {/* orbit paths for traveling dots */}

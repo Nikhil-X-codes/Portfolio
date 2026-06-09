@@ -103,7 +103,24 @@ export default function Projects() {
   href: 'https://github.com/Nikhil-X-codes/Iris-Detection',
   techStack: ['Python', 'PyTorch', 'OpenCV'],
 },
-
+{
+  id: 10,
+  title: 'Medzee.ai',
+  displayText: 'Medzee.AI',
+  category: 'AI',
+  description:
+    'AI-powered healthcare assistant that analyzes medical reports and prescriptions using OCR, LLMs, and RAG. Features report interpretation, medicine explanations, health analytics dashboard, voice-enabled AI chat, and personalized medical insights.',
+  href: 'https://github.com/Nikhil-X-codes/AI-Powered-Health',
+  techStack: [
+    'Next.js',
+    'FastAPI',
+    'PostgreSQL',
+    'Prisma',
+    'LangChain',
+    'RAG',
+    'Docker'
+  ],
+},
     ],
     []
   );
