@@ -5,8 +5,9 @@ import {
   SiJavascript, SiPython, SiPostgresql, SiCplusplus,
   SiReact, SiNextdotjs, SiNodedotjs, SiExpress, SiTailwindcss,
   SiMongodb, SiSupabase, SiNumpy, SiPandas, SiScikitlearn, SiPytorch,
-  SiPostman, SiHuggingface, SiGithub, SiLangchain, SiChroma, SiDocker, SiFastapi
+  SiPostman, SiHuggingface, SiGithub, SiLangchain, SiDocker, SiFastapi
 } from 'react-icons/si'
+import { FaDatabase } from 'react-icons/fa6'
 
 /* ── layout constants ── */
 const CX = 480, CY = 480, SVG_SIZE = 960
@@ -68,7 +69,7 @@ const categories = [
       { name: 'scikit-learn', icon: SiScikitlearn, repo: 'https://github.com/scikit-learn/scikit-learn' },
       { name: 'PyTorch', icon: SiPytorch, repo: 'https://github.com/pytorch/pytorch' },
       { name: 'LangChain', icon: SiLangchain, repo: 'https://github.com/langchain-ai/langchain' },
-      { name: 'ChromaDB', icon: SiChroma, repo: 'https://github.com/chroma-core/chroma' },
+      { name: 'ChromaDB', icon: FaDatabase, repo: 'https://github.com/chroma-core/chroma' },
       {
         name: 'FastAPI',
         icon: SiFastapi,
