@@ -24,23 +24,31 @@ export default function ProjectCard({ project }) {
       href={project.href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative flex flex-col rounded-xl bg-[#121212] border border-white/5 transition-all duration-300 hover:border-orange-500/30 hover:bg-[#161616] shadow-xl overflow-hidden select-none cursor-pointer no-underline"
+      className="group relative flex flex-col rounded-xl bg-[#121212] border border-white/5 transition-all duration-300 hover:border-orange-500/30 hover:bg-[#161616] hover:scale-[1.02] hover:shadow-[0_20px_50px_rgba(249,115,22,0.12)] gradient-border-sweep overflow-hidden select-none cursor-pointer no-underline"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Top Accent line on hover */}
       <div className="absolute top-0 left-1/4 right-1/4 h-[2px] bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20" />
 
-      {/* Project Screenshot Area (16:9 ratio) with pan-up effect on hover */}
+      {/* Project Screenshot Area (16:9 ratio) with zoom and pan-up effect on hover */}
       <div className="relative w-full aspect-video overflow-hidden bg-gradient-to-br from-slate-950 via-[#0d0d0d] to-[#141414] border-b border-white/5 flex items-center justify-center">
-        {/* Subtle high-tech grid overlay */}
-        <div
-          className="absolute inset-0 bg-[linear-gradient(to_right,#f9731608_1px,transparent_1px),linear-gradient(to_bottom,#f9731608_1px,transparent_1px)] bg-[size:14px_14px] transition-transform duration-[1.8s] ease-out"
-          style={{
-            transform: isHovered ? 'translateY(-18px)' : 'translateY(0px)',
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 z-[1]" />
+        {/* Zoom wrapper */}
+        <div className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-105">
+          {/* Subtle high-tech grid overlay */}
+          <div
+            className="absolute inset-0 bg-[linear-gradient(to_right,#f9731608_1px,transparent_1px),linear-gradient(to_bottom,#f9731608_1px,transparent_1px)] bg-[size:14px_14px] transition-transform duration-[1.8s] ease-out"
+            style={{
+              transform: isHovered ? 'translateY(-18px)' : 'translateY(0px)',
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 z-[1]" />
+          
+          {/* Glowing background orb */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="w-28 h-28 rounded-full bg-orange-500/10 blur-2xl group-hover:bg-orange-500/20 transition-all duration-500" />
+          </div>
+        </div>
 
         {/* Window dots */}
         <div className="absolute top-2.5 left-2.5 z-10 flex gap-1.5 opacity-30 group-hover:opacity-60 transition-opacity">
@@ -63,9 +71,6 @@ export default function ProjectCard({ project }) {
             {project.displayText}
           </h4>
         </div>
-
-        {/* Glowing background orb */}
-        <div className="absolute w-28 h-28 rounded-full bg-orange-500/10 blur-2xl group-hover:bg-orange-500/20 transition-all duration-500 pointer-events-none" />
       </div>
 
       {/* Card Body */}
@@ -99,7 +104,7 @@ export default function ProjectCard({ project }) {
             {project.techStack.map((tech, i) => (
               <span
                 key={i}
-                className="px-2.5 py-0.5 text-[10px] font-mono rounded-full bg-orange-500/10 text-orange-500 border border-orange-500/20 font-medium tracking-wide"
+                className="px-2.5 py-0.5 text-[10px] font-mono rounded-full bg-orange-500/10 text-orange-500 border border-orange-500/20 font-medium tracking-wide tag-shimmer"
               >
                 {tech}
               </span>

@@ -8,6 +8,7 @@ import Achievements from './components/Achievements'
 import Education from './components/Education'
 import SplashCursor from './components/SplashCursor'
 import IntroSplash from './components/IntroSplash'
+import CustomCursor from './components/ui/CustomCursor'
 import { DarkMultiplierGrid } from './components/ui/grid-background'
 
 
@@ -75,6 +76,9 @@ export default function App() {
       {/* Intro Splash Curtain */}
       {showSplash && <IntroSplash onEnter={() => setShowSplash(false)} />}
 
+      {/* Custom interactive cursor (dot + ring) */}
+      <CustomCursor />
+
       {/* Interactive fluid splash cursor overlay */}
       <SplashCursor
         SIM_RESOLUTION={128}
@@ -93,7 +97,7 @@ export default function App() {
 
       <div className="app-shell relative z-10 bg-transparent text-slate-100 transition-colors duration-500 ease-in-out">
         <main>
-          <Home />
+          <Home isSplashActive={showSplash} />
           <Projects />
           <Skills />
           <Achievements />

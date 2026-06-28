@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Palette } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 import DecryptedText from './ui/DecryptedText'
 import {
   SiJavascript, SiPython, SiPostgresql, SiCplusplus,
@@ -107,16 +108,23 @@ function orbitPathD(r) {
 }
 
 /* ── Planet node ── */
-function Planet({ cat, isActive, onClick }) {
-  const x = ptX(cat.orbitR, cat.angle);
-  const y = ptY(cat.orbitR, cat.angle);
+function Planet({ cat, isActive, onClick, orbitOffset = 0 }) {
+  const currentAngle = (cat.angle + orbitOffset) % 360;
+  const x = ptX(cat.orbitR, currentAngle);
+  const y = ptY(cat.orbitR, currentAngle);
   const R = isActive ? 38 : 24;
 
   return (
     <g onClick={() => onClick(cat.id)} style={{ cursor: 'pointer' }}>
-      {/* outer glow when active */}
+      {/* outer glow when active (morphs smoothly using shared layoutId!) */}
       {isActive && (
-        <circle cx={x} cy={y} r={R + 22} fill={cat.color + '18'} className="solar-pulse" />
+        <motion.circle
+          layoutId="activePlanetGlow"
+          cx={x} cy={y} r={R + 22}
+          fill={cat.color + '18'}
+          className="solar-pulse"
+          transition={{ type: 'spring', stiffness: 220, damping: 24 }}
+        />
       )}
       {/* planet body */}
       <circle
@@ -153,9 +161,10 @@ function Planet({ cat, isActive, onClick }) {
 }
 
 /* ── Skill satellite nodes scaled up for absolute clarity and visual prominence ── */
-function SkillSatellites({ cat, mounted }) {
-  const planetX = ptX(cat.orbitR, cat.angle);
-  const planetY = ptY(cat.orbitR, cat.angle);
+function SkillSatellites({ cat, mounted, orbitOffset = 0 }) {
+  const currentAngle = (cat.angle + orbitOffset) % 360;
+  const planetX = ptX(cat.orbitR, currentAngle);
+  const planetY = ptY(cat.orbitR, currentAngle);
   const satDist = 95;
   const skills = cat.skills;
   const angleStep = 360 / skills.length;
@@ -234,16 +243,30 @@ function SkillSatellites({ cat, mounted }) {
   );
 }
 
+
+
 /* ────────────────────────────────────────── */
 export default function Skills() {
   const [active, setActive] = useState(null)
   const [mounted, setMounted] = useState(false)
   const [prevActive, setPrevActive] = useState(null)
+  const [orbitOffset, setOrbitOffset] = useState(0)
 
+  // requestAnimationFrame loop to slowly rotate the orbits (1 full rotation in 240 seconds)
   useEffect(() => {
-    const t = setTimeout(() => setMounted(true), 120)
-    return () => clearTimeout(t)
-  }, [])
+    let animFrame;
+    const startTime = Date.now();
+    
+    const update = () => {
+      const elapsed = (Date.now() - startTime) / 1000;
+      const deg = (elapsed * (360 / 240)) % 360;
+      setOrbitOffset(deg);
+      animFrame = requestAnimationFrame(update);
+    };
+    
+    animFrame = requestAnimationFrame(update);
+    return () => cancelAnimationFrame(animFrame);
+  }, []);
 
   useEffect(() => {
     if (prevActive !== active) {
@@ -260,17 +283,30 @@ export default function Skills() {
     <section id="about" className="relative ui-section overflow-hidden">
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
 
-        {/* Header */}
-        <div className="mb-10 sm:mb-12 scroll-animate from-bottom">
+        {/* Header with scroll reveal fade-up */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="mb-10 sm:mb-12"
+        >
           <p className="ui-kicker mb-2">Technical Stack</p>
           <h2 className="ui-title mb-3">
             <DecryptedText text="The Toolkit" animateOn="inViewHover" revealDirection="center" speed={55} maxIterations={12} />
           </h2>
           <div className="ui-divider"></div>
-        </div>
+        </motion.div>
 
-        {/* Solar system — centered, full width */}
-        <div className="mx-auto mb-8 scroll-animate from-scale" style={{ maxWidth: 780 }}>
+        {/* Solar system — centered, full width with scale reveal */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="mx-auto mb-8"
+          style={{ maxWidth: 780 }}
+        >
           <svg
             viewBox={`0 0 ${SVG_SIZE} ${SVG_SIZE}`}
             width="100%"
@@ -323,19 +359,20 @@ export default function Skills() {
               </g>
             ))}
 
-            {/* ── planet nodes ── */}
+            {/* ── planet nodes with dynamic orbitOffset ── */}
             {categories.map(cat => (
               <Planet
                 key={cat.id}
                 cat={cat}
                 isActive={active === cat.id}
                 onClick={id => setActive(prev => (prev === id ? null : id))}
+                orbitOffset={orbitOffset}
               />
             ))}
 
             {/* ── skill satellites around the active planet ── */}
             {activeCat && (
-              <SkillSatellites key={activeCat.id} cat={activeCat} mounted={mounted} />
+              <SkillSatellites key={activeCat.id} cat={activeCat} mounted={mounted} orbitOffset={orbitOffset} />
             )}
 
             {/* ── sun centre ── */}
@@ -351,10 +388,71 @@ export default function Skills() {
               fontFamily="Inter, sans-serif"
             >click a planet</text>
           </svg>
+        </motion.div>
+
+        {/* Active Tech Details Card with Selection Spring */}
+        <div className="max-w-2xl mx-auto mt-8">
+          <AnimatePresence mode="wait">
+            {activeCat && (
+              <motion.article
+                key={activeCat.id}
+                initial={{ opacity: 0, scale: 0.85, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.85, y: 20 }}
+                transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                className="ui-card p-6 border flex flex-col justify-between"
+                style={{ borderColor: `${activeCat.color}33` }}
+              >
+                <div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div 
+                      className="rounded-lg p-2 border flex items-center justify-center font-bold text-xs"
+                      style={{ 
+                        backgroundColor: `${activeCat.color}15`, 
+                        borderColor: `${activeCat.color}30`,
+                        color: activeCat.color,
+                        width: '38px',
+                        height: '38px'
+                      }}
+                    >
+                      {activeCat.label.slice(0, 2).toUpperCase()}
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-slate-100">{activeCat.label}</h3>
+                      <p className="text-xs text-slate-400">Selected Technology Stack</p>
+                    </div>
+                  </div>
+                  
+                  {/* Skill List with interactive repo links */}
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {activeCat.skills.map((skill) => {
+                      const Icon = skill.icon;
+                      return (
+                        <a
+                          key={skill.name}
+                          href={skill.repo || '#'}
+                          target={skill.repo ? "_blank" : undefined}
+                          rel={skill.repo ? "noopener noreferrer" : undefined}
+                          className="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-900/40 border border-white/5 text-xs text-slate-300 hover:text-white transition-all hover:scale-105 active:scale-95 no-underline"
+                          style={{ borderColor: `${activeCat.color}15` }}
+                        >
+                          <Icon style={{ color: activeCat.color }} className="w-4.5 h-4.5" />
+                          <span>{skill.name}</span>
+                        </a>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className="text-[10px] text-slate-500 font-mono mt-6 pt-3 border-t border-white/5">
+                  Click on planets to filter or clear selection.
+                </div>
+              </motion.article>
+            )}
+          </AnimatePresence>
         </div>
 
-        {/* ── Bottom row ── */}
-        <div className="max-w-2xl mx-auto">
+        {/* ── Bottom row: Static Engineering Philosophy ── */}
+        <div className="max-w-2xl mx-auto mt-8">
           <article className="ui-card scroll-animate from-bottom p-6">
             <div className="flex items-center gap-3 mb-4">
               <div className="rounded-lg border border-gray-600/40 bg-gray-900/30 p-2">
@@ -377,5 +475,5 @@ export default function Skills() {
 
       </div>
     </section>
-  )
+  );
 }

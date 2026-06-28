@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import emailjs from '@emailjs/browser'
+import { motion } from 'framer-motion'
 import DecryptedText from './ui/DecryptedText'
 
 export default function ContactUs() {
@@ -52,14 +53,28 @@ export default function ContactUs() {
   return (
     <section id="contact" className="relative ui-section pb-28 overflow-hidden">
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-10 sm:mb-12 scroll-animate from-bottom">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="mb-10 sm:mb-12"
+        >
           <p className="ui-kicker mb-2">Let&apos;s Collaborate</p>
           <h2 className="ui-title mb-3">
             <DecryptedText text="Contact Me" animateOn="inViewHover" revealDirection="center" speed={55} maxIterations={12} />
           </h2>
           <div className="ui-divider"></div>
-        </div>
-      <form ref={formRef} className="ui-card mt-8 grid gap-4 sm:max-w-xl p-5 sm:p-6 scroll-animate from-left" onSubmit={handleSubmit}>
+        </motion.div>
+      <motion.form
+        ref={formRef}
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
+        className="ui-card mt-8 grid gap-4 sm:max-w-xl p-5 sm:p-6"
+        onSubmit={handleSubmit}
+      >
         <input
           type="text"
           placeholder="Your Name"
@@ -101,7 +116,7 @@ export default function ContactUs() {
         {status === 'error' && (
           <p className="text-rose-300">Please fill all fields with a valid email.</p>
         )}
-      </form>
+      </motion.form>
       </div>
     </section>
   )

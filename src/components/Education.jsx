@@ -32,17 +32,16 @@ const educationData = [
 const timelineVariants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.25 },
+    transition: { staggerChildren: 0.12 },
   },
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, x: -40, scale: 0.95 },
+  hidden: { opacity: 0, y: 40 },
   visible: {
     opacity: 1,
-    x: 0,
-    scale: 1,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" },
   },
 };
 
@@ -54,7 +53,13 @@ export default function Education() {
     >
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-10 sm:mb-14 scroll-animate from-bottom">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="mb-10 sm:mb-14"
+        >
           <p className="ui-kicker mb-2">Academic Journey</p>
           <h2 className="ui-title mb-3">
             <DecryptedText
@@ -66,11 +71,11 @@ export default function Education() {
             />
           </h2>
           <div className="ui-divider mt-4"></div>
-        </div>
+        </motion.div>
 
         {/* Timeline */}
         <motion.div
-          className="relative scroll-animate from-bottom"
+          className="relative"
           variants={timelineVariants}
           initial="hidden"
           whileInView="visible"
@@ -82,6 +87,7 @@ export default function Education() {
           <div className="flex flex-col gap-10 sm:gap-12">
             {educationData.map((edu, index) => {
               const Icon = edu.icon;
+              const progress = edu.status === 'Pursuing' ? 65 : 100;
               return (
                 <motion.div
                   key={edu.id}
