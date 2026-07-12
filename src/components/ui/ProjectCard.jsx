@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ExternalLink, Github, Globe, Cpu, Layers, Sparkles } from 'lucide-react';
+import { BorderBeam } from './BorderBeam.jsx';
 
 export default function ProjectCard({ project }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -24,10 +25,13 @@ export default function ProjectCard({ project }) {
       href={project.href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative flex flex-col rounded-xl bg-[#121212] border border-white/5 transition-all duration-300 hover:border-orange-500/30 hover:bg-[#161616] hover:scale-[1.02] hover:shadow-[0_20px_50px_rgba(249,115,22,0.12)] gradient-border-sweep overflow-hidden select-none cursor-pointer no-underline"
+      className="group relative flex flex-col rounded-xl bg-[#121212] border border-white/5 transition-all duration-300 hover:border-orange-500/30 hover:bg-[#161616] hover:scale-[1.02] hover:shadow-[0_20px_50px_rgba(249,115,22,0.12)] overflow-hidden select-none cursor-pointer no-underline"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
+      {/* Border Beam effect */}
+      <BorderBeam size={130} duration={8} borderWidth={1.5} colorFrom="#f97316" colorTo="#3b82f6" />
+
       {/* Top Accent line on hover */}
       <div className="absolute top-0 left-1/4 right-1/4 h-[2px] bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20" />
 

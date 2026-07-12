@@ -22,24 +22,24 @@ const CodeBracketsIcon = ({ className }) => (
 
 export default function Navbar() {
   const [visible, setVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
+    let lastScroll = window.scrollY;
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY && currentScrollY > 80) {
+      if (currentScrollY > lastScroll && currentScrollY > 80) {
         // Scroll down: hide navbar
         setVisible(false);
       } else {
         // Scroll up: show navbar
         setVisible(true);
       }
-      setLastScrollY(currentScrollY);
+      lastScroll = currentScrollY;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+  }, []);
 
   const navItems = [
     { id: 'home', label: 'Home', icon: Home, type: 'nav' },

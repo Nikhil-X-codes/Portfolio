@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, CheckCircle, Calendar } from 'lucide-react';
 import DecryptedText from './ui/DecryptedText';
+import { BorderBeam } from './ui/BorderBeam.jsx';
 
 const achievementsData = [
   // Hackathons
@@ -187,6 +188,7 @@ export default function Achievements() {
                       }`}
                     >
                       <div className="group relative rounded-2xl border border-slate-800/80 bg-slate-950/60 p-6 backdrop-blur-xl transition-all duration-300 hover:border-orange-500/40 hover:bg-slate-900/50 hover:shadow-[0_8px_32px_rgba(249,115,22,0.08)] flex flex-col justify-between">
+                        <BorderBeam size={130} duration={8} borderWidth={1.5} colorFrom="#f97316" colorTo="#3b82f6" />
                         <div>
                           {/* Top line: Icon, Title & Year Badge */}
                           <div className="flex items-start gap-4 mb-4">

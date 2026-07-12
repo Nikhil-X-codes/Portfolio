@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { ArrowRight, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
 import MagneticButton from './ui/MagneticButton';
+import { BorderBeam } from './ui/BorderBeam.jsx';
 
 const containerVariants = {
   hidden: {},
@@ -61,17 +62,11 @@ export default function Home({ isSplashActive = true }) {
 
   return (
     <section id="home" className="relative ui-section min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Subtle Moving Mesh Gradient Background & Noise Overlay */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
-        <div className="absolute inset-0 bg-[#060610]" />
-        <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(6,182,212,0.12),transparent_70%)] animate-mesh-orb-1" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(20,184,166,0.1),transparent_70%)] animate-mesh-orb-2" />
-        <div className="absolute top-[20%] right-[10%] w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(99,102,241,0.08),transparent_70%)] animate-mesh-orb-3" />
-        <div className="noise-overlay" />
-      </div>
+
 
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 w-full">
-        <div className="ui-card scroll-animate from-left backdrop-blur-lg p-6 sm:p-10 lg:p-12 hover:shadow-2xl transition-shadow duration-500 border border-slate-800/80 bg-slate-950/60">
+        <div className="ui-card scroll-animate from-left backdrop-blur-lg p-6 sm:p-10 lg:p-12 hover:shadow-2xl transition-shadow duration-500 border border-slate-800/80 bg-slate-950/60 relative overflow-hidden">
+          <BorderBeam size={220} duration={12} borderWidth={1.8} colorFrom="#f97316" colorTo="#3b82f6" />
           <div className="grid items-center gap-8 lg:gap-12 lg:grid-cols-[1fr_280px]">
             <motion.div
               variants={containerVariants}

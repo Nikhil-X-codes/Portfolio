@@ -839,17 +839,18 @@ function SplashCursor({
     }
 
     function correctRadius(radius) {
-      let aspectRatio = canvas.width / canvas.height;
+      let aspectRatio = canvas.width / (canvas.height || 1);
       if (aspectRatio > 1) radius *= aspectRatio;
       return radius;
     }
 
     function updatePointerDownData(pointer, id, posX, posY) {
+      if (canvas.width === 0 || canvas.height === 0) return;
       pointer.id = id;
       pointer.down = true;
       pointer.moved = false;
       pointer.texcoordX = posX / canvas.width;
-      pointer.texcoordY = 1.0 - posY / canvas.height;
+      pointer.texcoordY = 1.0 - posY / (canvas.height || 1);
       pointer.prevTexcoordX = pointer.texcoordX;
       pointer.prevTexcoordY = pointer.texcoordY;
       pointer.deltaX = 0;
@@ -858,10 +859,11 @@ function SplashCursor({
     }
 
     function updatePointerMoveData(pointer, posX, posY, color) {
+      if (canvas.width === 0 || canvas.height === 0) return;
       pointer.prevTexcoordX = pointer.texcoordX;
       pointer.prevTexcoordY = pointer.texcoordY;
       pointer.texcoordX = posX / canvas.width;
-      pointer.texcoordY = 1.0 - posY / canvas.height;
+      pointer.texcoordY = 1.0 - posY / (canvas.height || 1);
       pointer.deltaX = correctDeltaX(pointer.texcoordX - pointer.prevTexcoordX);
       pointer.deltaY = correctDeltaY(pointer.texcoordY - pointer.prevTexcoordY);
       pointer.moved = Math.abs(pointer.deltaX) > 0 || Math.abs(pointer.deltaY) > 0;
@@ -873,13 +875,13 @@ function SplashCursor({
     }
 
     function correctDeltaX(delta) {
-      let aspectRatio = canvas.width / canvas.height;
+      let aspectRatio = canvas.width / (canvas.height || 1);
       if (aspectRatio < 1) delta *= aspectRatio;
       return delta;
     }
 
     function correctDeltaY(delta) {
-      let aspectRatio = canvas.width / canvas.height;
+      let aspectRatio = canvas.width / (canvas.height || 1);
       if (aspectRatio > 1) delta /= aspectRatio;
       return delta;
     }
@@ -980,6 +982,7 @@ function SplashCursor({
 
     // Named event handlers for proper cleanup
     function handleMouseDown(e) {
+      if (canvas.width === 0 || canvas.height === 0) return;
       let pointer = pointers[0];
       let posX = scaleByPixelRatio(e.clientX);
       let posY = scaleByPixelRatio(e.clientY);
@@ -989,12 +992,16 @@ function SplashCursor({
 
     let firstMouseMoveHandled = false;
     function handleMouseMove(e) {
+      if (canvas.width === 0 || canvas.height === 0) return;
       let pointer = pointers[0];
       let posX = scaleByPixelRatio(e.clientX);
       let posY = scaleByPixelRatio(e.clientY);
       if (!firstMouseMoveHandled) {
-        let color = generateColor();
-        updatePointerMoveData(pointer, posX, posY, color);
+        pointer.texcoordX = posX / canvas.width;
+        pointer.texcoordY = 1.0 - posY / canvas.height;
+        pointer.prevTexcoordX = pointer.texcoordX;
+        pointer.prevTexcoordY = pointer.texcoordY;
+        pointer.color = generateColor();
         firstMouseMoveHandled = true;
       } else {
         updatePointerMoveData(pointer, posX, posY, pointer.color);
@@ -1002,6 +1009,7 @@ function SplashCursor({
     }
 
     function handleTouchStart(e) {
+      if (canvas.width === 0 || canvas.height === 0) return;
       const touches = e.targetTouches;
       let pointer = pointers[0];
       for (let i = 0; i < touches.length; i++) {
@@ -1012,6 +1020,7 @@ function SplashCursor({
     }
 
     function handleTouchMove(e) {
+      if (canvas.width === 0 || canvas.height === 0) return;
       const touches = e.targetTouches;
       let pointer = pointers[0];
       for (let i = 0; i < touches.length; i++) {

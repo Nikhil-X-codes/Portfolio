@@ -8,9 +8,8 @@ import Achievements from './components/Achievements'
 import Education from './components/Education'
 import SplashCursor from './components/SplashCursor'
 import IntroSplash from './components/IntroSplash'
-import CustomCursor from './components/ui/CustomCursor'
-import { DarkMultiplierGrid } from './components/ui/grid-background'
-
+import ScrollProgressBar from './components/ui/ScrollProgressBar.jsx'
+import ParticlesBackground from './components/ui/ParticlesBackground.jsx'
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -69,20 +68,16 @@ export default function App() {
 
   return (
     <div className="relative w-full min-h-screen overflow-x-hidden">
-
-      {/* Fixed Dark Grid Background – covers entire viewport */}
-      <DarkMultiplierGrid className="!fixed inset-0 z-0 !min-h-0 h-screen" />
+      <ScrollProgressBar />
+      <ParticlesBackground />
 
       {/* Intro Splash Curtain */}
       {showSplash && <IntroSplash onEnter={() => setShowSplash(false)} />}
 
-      {/* Custom interactive cursor (dot + ring) */}
-      <CustomCursor />
-
       {/* Interactive fluid splash cursor overlay */}
       <SplashCursor
         SIM_RESOLUTION={128}
-        DYE_RESOLUTION={1440}
+        DYE_RESOLUTION={512}
         COLOR="#EF4444"
         RAINBOW_MODE={true}
       />

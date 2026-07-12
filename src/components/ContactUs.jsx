@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import emailjs from '@emailjs/browser'
 import { motion } from 'framer-motion'
 import DecryptedText from './ui/DecryptedText'
+import { BorderBeam } from './ui/BorderBeam.jsx'
 
 export default function ContactUs() {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
@@ -72,9 +73,10 @@ export default function ContactUs() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
-        className="ui-card mt-8 grid gap-4 sm:max-w-xl p-5 sm:p-6"
+        className="ui-card mt-8 grid gap-4 sm:max-w-xl p-5 sm:p-6 relative overflow-hidden"
         onSubmit={handleSubmit}
       >
+        <BorderBeam size={130} duration={8} borderWidth={1.5} colorFrom="#f97316" colorTo="#3b82f6" />
         <input
           type="text"
           placeholder="Your Name"

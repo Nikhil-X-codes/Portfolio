@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { GraduationCap, School, CalendarDays, Award } from 'lucide-react';
 import DecryptedText from './ui/DecryptedText';
+import { BorderBeam } from './ui/BorderBeam.jsx';
 
 const educationData = [
   {
@@ -8,7 +9,7 @@ const educationData = [
     degree: 'B.Tech in Information Technology',
     institution: 'IIIT Sonepat',
     period: '2023 – 2027',
-    score: 'CGPA — 7.8',
+    score: 'CGPA — 7.47',
     status: 'Pursuing',
     icon: GraduationCap,
     highlights: [
@@ -106,6 +107,7 @@ export default function Education() {
 
                   {/* Card */}
                   <div className="relative rounded-2xl border border-slate-800/80 bg-slate-950/60 p-5 sm:p-7 backdrop-blur-xl transition-all duration-300 hover:border-orange-500/40 hover:bg-slate-900/50 hover:shadow-[0_8px_40px_rgba(249,115,22,0.08)] overflow-hidden">
+                    <BorderBeam size={130} duration={8} borderWidth={1.5} colorFrom="#f97316" colorTo="#3b82f6" />
                     {/* Subtle grid texture */}
                     <div className="absolute inset-0 bg-[linear-gradient(to_right,#f9731604_1px,transparent_1px),linear-gradient(to_bottom,#f9731604_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
 

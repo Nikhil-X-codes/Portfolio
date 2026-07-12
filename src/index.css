@@ -86,12 +86,12 @@
   }
 
   html {
-    background: #060610;
+    background: #000000;
   }
 
   body {
     @apply text-foreground;
-    background: #060610;
+    background: #000000;
   }
 }
 
@@ -693,13 +693,13 @@ main {
 /* Gradient border sweep on hover */
 @keyframes borderSweep {
   0% {
-    background-position: 0% 0%;
+    background-position: 0% 50%;
   }
   50% {
-    background-position: 100% 100%;
+    background-position: 100% 50%;
   }
   100% {
-    background-position: 0% 0%;
+    background-position: 0% 50%;
   }
 }
 
@@ -712,21 +712,30 @@ main {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  padding: 1.5px; /* border thickness */
-  background: linear-gradient(135deg, rgba(249, 115, 22, 0.4), transparent 45%, rgba(249, 115, 22, 0.4));
-  background-size: 200% 200%;
+  padding: 2px; /* thicker border */
+  /* Dark but highly saturated running RGB gradient for maximum visibility */
+  background: linear-gradient(135deg, 
+    rgba(239, 68, 68, 0.75),    /* Saturated Red */
+    rgba(59, 130, 246, 0.75),   /* Saturated Blue */
+    rgba(168, 85, 247, 0.75),   /* Saturated Purple */
+    rgba(16, 185, 129, 0.75),   /* Saturated Emerald */
+    rgba(239, 68, 68, 0.75)     /* Loop back */
+  );
+  background-size: 300% 300%;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  opacity: 0.45; /* highly visible default running glow */
+  transition: opacity 0.4s ease, padding 0.4s ease;
   pointer-events: none;
   z-index: 5;
+  animation: borderSweep 6s linear infinite;
 }
 
 .gradient-border-sweep:hover::before {
-  opacity: 1;
-  animation: borderSweep 4s linear infinite;
+  opacity: 1.0; /* full brightness on hover */
+  padding: 3px; /* extra thick for glowing border pop on hover */
+  animation: borderSweep 2.8s linear infinite; /* accelerates */
 }
 
 /* Tag shimmer pass on hover */
