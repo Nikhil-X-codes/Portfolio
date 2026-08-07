@@ -106,7 +106,7 @@ export default function Education() {
                   <div className="absolute left-[1.15rem] sm:left-[1.4rem] top-[1.15rem] sm:top-[1.1rem] w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-orange-500/20 animate-ping pointer-events-none z-0" />
 
                   {/* Card */}
-                  <div className="relative rounded-2xl border border-slate-800/80 bg-slate-950/60 p-5 sm:p-7 backdrop-blur-xl transition-all duration-300 hover:border-orange-500/40 hover:bg-slate-900/50 hover:shadow-[0_8px_40px_rgba(249,115,22,0.08)] overflow-hidden">
+                  <div className="relative rounded-2xl border border-slate-800/80 bg-slate-950/90 p-5 sm:p-7 transition-all duration-300 hover:border-orange-500/40 hover:bg-slate-900/70 hover:shadow-[0_8px_40px_rgba(249,115,22,0.08)] overflow-hidden">
                     <BorderBeam size={130} duration={8} borderWidth={1.5} colorFrom="#f97316" colorTo="#3b82f6" />
                     {/* Subtle grid texture */}
                     <div className="absolute inset-0 bg-[linear-gradient(to_right,#f9731604_1px,transparent_1px),linear-gradient(to_bottom,#f9731604_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />

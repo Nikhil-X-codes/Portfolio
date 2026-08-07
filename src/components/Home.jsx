@@ -65,7 +65,7 @@ export default function Home({ isSplashActive = true }) {
 
 
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 w-full">
-        <div className="ui-card scroll-animate from-left backdrop-blur-lg p-6 sm:p-10 lg:p-12 hover:shadow-2xl transition-shadow duration-500 border border-slate-800/80 bg-slate-950/60 relative overflow-hidden">
+        <div className="ui-card scroll-animate from-left p-6 sm:p-10 lg:p-12 hover:shadow-2xl transition-shadow duration-500 border border-slate-800/80 bg-slate-950/90 relative overflow-hidden">
           <BorderBeam size={220} duration={12} borderWidth={1.8} colorFrom="#f97316" colorTo="#3b82f6" />
           <div className="grid items-center gap-8 lg:gap-12 lg:grid-cols-[1fr_280px]">
             <motion.div

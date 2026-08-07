@@ -6,22 +6,22 @@ import { BorderBeam } from './ui/BorderBeam.jsx';
 
 const achievementsData = [
   // Hackathons
+{
+  id: 'flipkart-grid-8',
+  title: 'Flipkart GRiD 8.0 – Round 2 Participant',
+  year: '2026',
+  category: 'hackathons',
+  description:
+    'Qualified for Round 2 of Flipkart GRiD 8.0, participating in the solving competitive programming and problem-solving challenges.',
+},
   {
-    id: 'adobe-hackathon',
-    title: 'Adobe India Hackathon – Round 1 Participant',
-    year: '2025',
-    category: 'hackathons',
-    description:
-      'Participated in Adobe India Hackathon Round 1 featuring Online MCQ Assessment and Coding challenges as part of Team CoderTrio.',
-  },
-  {
-    id: 'tvs-epic',
-    title: 'TVS Credit EPIC 7.0 Participant',
-    year: '2025',
-    category: 'hackathons',
-    description:
-      'Participated in TVS Credit EPIC 7.0 IT Challenge representing CODE-Mania from IIIT Sonepat.',
-  },
+  id: 'hackvega-2',
+  title: 'HackVega 2.0 – Round 2 Participant',
+  year: '2026',
+  category: 'hackathons',
+  description:
+    'Qualified for Round 2 of HackVega 2.0, participating in the national-level hackathon.',
+},
   {
     id: 'techexpo-iitg',
     title: 'TechExpo IIT Guwahati Participant',
@@ -154,18 +154,17 @@ export default function Achievements() {
           />
 
           <div className="flex flex-col w-full relative z-10 gap-8">
-            <AnimatePresence mode="popLayout">
+            <AnimatePresence mode="wait">
               {filteredAchievements.map((item, idx) => {
                 const isLeft = idx % 2 === 0;
                 return (
                   <motion.div
                     key={item.id}
-                    layout
                     initial={{ opacity: 0, x: isMobile ? 30 : (isLeft ? -50 : 50) }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
+                    exit={{ opacity: 0, y: 20 }}
+                    viewport={{ once: true, amount: 0.15 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
                     className={`relative flex flex-col md:flex-row items-center md:justify-between w-full ${
                       isLeft ? 'md:flex-row-reverse' : ''
                     }`}
@@ -175,8 +174,8 @@ export default function Achievements() {
                       <motion.div
                         initial={{ scale: 0 }}
                         whileInView={{ scale: 1 }}
-                        viewport={{ once: true, amount: 0.2 }}
-                        transition={{ type: "spring", stiffness: 300, damping: 15, delay: idx * 0.08 }}
+                        viewport={{ once: true, amount: 0.15 }}
+                        transition={{ type: "spring", stiffness: 200, damping: 20 }}
                         className="w-4.5 h-4.5 rounded-full border-4 border-orange-500 bg-[#0a0a0a] shadow-[0_0_12px_rgba(249,115,22,0.6)]"
                       />
                     </div>
@@ -187,7 +186,7 @@ export default function Achievements() {
                         isLeft ? 'md:pr-6' : 'md:pl-6'
                       }`}
                     >
-                      <div className="group relative rounded-2xl border border-slate-800/80 bg-slate-950/60 p-6 backdrop-blur-xl transition-all duration-300 hover:border-orange-500/40 hover:bg-slate-900/50 hover:shadow-[0_8px_32px_rgba(249,115,22,0.08)] flex flex-col justify-between">
+                      <div className="group relative rounded-2xl border border-slate-800/80 bg-slate-950/90 p-6 transition-all duration-300 hover:border-orange-500/40 hover:bg-slate-900/70 hover:shadow-[0_8px_32px_rgba(249,115,22,0.08)] flex flex-col justify-between">
                         <BorderBeam size={130} duration={8} borderWidth={1.5} colorFrom="#f97316" colorTo="#3b82f6" />
                         <div>
                           {/* Top line: Icon, Title & Year Badge */}
@@ -202,10 +201,10 @@ export default function Achievements() {
                                 </h3>
                                 {/* Year Badge with Scale/Rotation pop */}
                                 <motion.span
-                                  initial={{ scale: 0.8, rotate: 0 }}
-                                  whileInView={{ scale: [0.8, 1.15, 1], rotate: [0, 6, 0] }}
-                                  viewport={{ once: true, amount: 0.3 }}
-                                  transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
+                                  initial={{ scale: 0.8 }}
+                                  whileInView={{ scale: 1 }}
+                                  viewport={{ once: true, amount: 0.2 }}
+                                  transition={{ duration: 0.4, ease: "easeOut" }}
                                   className="px-2.5 py-0.5 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 font-mono text-[10px] font-bold tracking-wider"
                                 >
                                   {item.year}

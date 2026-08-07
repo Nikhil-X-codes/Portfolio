@@ -7,11 +7,11 @@ export default function ParticlesBackground() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: true });
 
     let animationFrameId;
     let particles = [];
-    const particleCount = 70;
+    const particleCount = 40;
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
@@ -79,7 +79,7 @@ export default function ParticlesBackground() {
 
       draw() {
         // Draw a glowing radial gradient spark with a bright white hot core
-        const glowRadius = this.radius * 3.5;
+        const glowRadius = this.radius * 2.5;
         const gradient = ctx.createRadialGradient(
           this.x, this.y, 0,
           this.x, this.y, glowRadius
@@ -108,8 +108,8 @@ export default function ParticlesBackground() {
           const dx = particles[a].x - particles[b].x;
           const dy = particles[a].y - particles[b].y;
           const distance = Math.hypot(dx, dy);
-          if (distance < 115) {
-            const opacity = (1 - distance / 115) * 0.15;
+          if (distance < 100) {
+            const opacity = (1 - distance / 100) * 0.12;
             ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
             ctx.lineWidth = 0.8;
             ctx.beginPath();
@@ -150,6 +150,7 @@ export default function ParticlesBackground() {
   return (
     <canvas
       ref={canvasRef}
+      style={{ contain: 'strict' }}
       className="fixed inset-0 w-full h-full pointer-events-none z-0"
     />
   );

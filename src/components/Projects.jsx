@@ -130,23 +130,20 @@ export default function Projects() {
     const carousel = carouselLeftRef.current;
     if (!carousel) return;
 
-    const scrollStep = 1; // pixels per frame
-    const scrollDelay = 10; // milliseconds between scrolls (lower = faster)
+    let rafId;
+    const scrollStep = 0.6; // pixels per frame at ~60fps
 
-    scrollIntervalLeftRef.current = setInterval(() => {
+    const tick = () => {
       if (carousel.scrollTop + carousel.clientHeight >= carousel.scrollHeight - 10) {
-        // Reset to top smoothly by jumping back
         carousel.scrollTop = 0;
       } else {
         carousel.scrollTop += scrollStep;
       }
-    }, scrollDelay);
-
-    return () => {
-      if (scrollIntervalLeftRef.current) {
-        clearInterval(scrollIntervalLeftRef.current);
-      }
+      rafId = requestAnimationFrame(tick);
     };
+    rafId = requestAnimationFrame(tick);
+
+    return () => cancelAnimationFrame(rafId);
   }, [projects]);
 
   // ── RIGHT PANEL: Continuous horizontal carousel rotation ──
@@ -258,7 +255,7 @@ export default function Projects() {
               hidden: { opacity: 0, y: 40 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
             }}
-            className="flex flex-col border border-white/10 rounded-2xl bg-[#0d0d0d]/80 backdrop-blur-md p-4 sm:p-6 shadow-2xl"
+            className="flex flex-col border border-white/10 rounded-2xl bg-[#0d0d0d]/95 p-4 sm:p-6 shadow-2xl"
           >
             {/* Header */}
             <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/5">
@@ -297,7 +294,7 @@ export default function Projects() {
               hidden: { opacity: 0, y: 40 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
             }}
-            className="flex flex-col border border-white/10 rounded-2xl bg-[#0d0d0d]/80 backdrop-blur-md p-4 sm:p-6 shadow-2xl h-full justify-between"
+            className="flex flex-col border border-white/10 rounded-2xl bg-[#0d0d0d]/95 p-4 sm:p-6 shadow-2xl h-full justify-between"
           >
             {/* Header */}
             <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/5">

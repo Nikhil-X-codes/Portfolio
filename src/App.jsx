@@ -57,8 +57,15 @@ export default function App() {
   }, [showSplash])
 
   useEffect(() => {
+    let ticking = false
     const onScroll = () => {
-      document.documentElement.style.setProperty('--scroll-y', String(window.scrollY))
+      if (!ticking) {
+        ticking = true
+        requestAnimationFrame(() => {
+          document.documentElement.style.setProperty('--scroll-y', String(window.scrollY))
+          ticking = false
+        })
+      }
     }
 
     onScroll()
