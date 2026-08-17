@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useRef } from 'react';
+import * as THREE from 'three';
 
 export default function ParticlesBackground() {
   const canvasRef = useRef(null);
@@ -7,143 +8,181 @@ export default function ParticlesBackground() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d', { alpha: true });
 
-    let animationFrameId;
-    let particles = [];
-    const particleCount = 40;
+    // Set up Scene, Camera, WebGLRenderer
+    const scene = new THREE.Scene();
+    
+    // Using PerspectiveCamera with: FOV = 60, Aspect Ratio, Near = 1, Far = 1500
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1500);
+    camera.position.z = 5;
 
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: true,
+      powerPreference: "high-performance",
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    // Mouse interactive coordinates
-    const mouse = { x: null, y: null, radius: 150 };
-    const handleMouseMove = (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-    };
-    const handleMouseLeave = () => {
-      mouse.x = null;
-      mouse.y = null;
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseleave', handleMouseLeave);
-
-    class Particle {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.45;
-        this.vy = (Math.random() - 0.5) * 0.45;
-        this.radius = Math.random() * 2 + 1.2;
-        
-        // Highly saturated themed colors for outer glow
-        const rand = Math.random();
-        if (rand > 0.85) {
-          this.colorGlow = 'rgba(6, 182, 212, 0.8)'; // Cyan spark glow
-        } else if (rand > 0.7) {
-          this.colorGlow = 'rgba(249, 115, 22, 0.8)'; // Orange spark glow
-        } else {
-          this.colorGlow = 'rgba(168, 85, 247, 0.6)'; // Purple/White glow
-        }
-      }
-
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-
-        // Wrap around boundaries smoothly
-        if (this.x < -10) this.x = canvas.width + 10;
-        if (this.x > canvas.width + 10) this.x = -10;
-        if (this.y < -10) this.y = canvas.height + 10;
-        if (this.y > canvas.height + 10) this.y = -10;
-
-        // Mouse push/repel effect
-        if (mouse.x !== null && mouse.y !== null) {
-          const dx = this.x - mouse.x;
-          const dy = this.y - mouse.y;
-          const distance = Math.hypot(dx, dy);
-          if (distance < mouse.radius) {
-            const force = (mouse.radius - distance) / mouse.radius;
-            const angle = Math.atan2(dy, dx);
-            this.x += Math.cos(angle) * force * 1.8;
-            this.y += Math.sin(angle) * force * 1.8;
-          }
-        }
-      }
-
-      draw() {
-        // Draw a glowing radial gradient spark with a bright white hot core
-        const glowRadius = this.radius * 2.5;
-        const gradient = ctx.createRadialGradient(
-          this.x, this.y, 0,
-          this.x, this.y, glowRadius
-        );
-        gradient.addColorStop(0, '#ffffff'); // bright core
-        gradient.addColorStop(0.2, '#ffffff'); // core extend
-        gradient.addColorStop(0.5, this.colorGlow); // colorful outer spark glow
-        gradient.addColorStop(1, 'rgba(0, 0, 0, 0)'); // fade out
-
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, glowRadius, 0, Math.PI * 2);
+    // Create dynamic star circle texture
+    const createCircleTexture = () => {
+      const textureCanvas = document.createElement('canvas');
+      textureCanvas.width = 16;
+      textureCanvas.height = 16;
+      const ctx = textureCanvas.getContext('2d');
+      if (ctx) {
+        const gradient = ctx.createRadialGradient(8, 8, 0, 8, 8, 8);
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+        gradient.addColorStop(0.2, 'rgba(255, 255, 255, 0.8)');
+        gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.2)');
+        gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
         ctx.fillStyle = gradient;
-        ctx.fill();
+        ctx.fillRect(0, 0, 16, 16);
       }
-    }
-
-    // Initialize particles
-    for (let i = 0; i < particleCount; i++) {
-      particles.push(new Particle());
-    }
-
-    // Connect particles with fading line links
-    const connect = () => {
-      for (let a = 0; a < particles.length; a++) {
-        for (let b = a + 1; b < particles.length; b++) {
-          const dx = particles[a].x - particles[b].x;
-          const dy = particles[a].y - particles[b].y;
-          const distance = Math.hypot(dx, dy);
-          if (distance < 100) {
-            const opacity = (1 - distance / 100) * 0.12;
-            ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
-            ctx.lineWidth = 0.8;
-            ctx.beginPath();
-            ctx.moveTo(particles[a].x, particles[a].y);
-            ctx.lineTo(particles[b].x, particles[b].y);
-            ctx.stroke();
-          }
-        }
-      }
+      return new THREE.CanvasTexture(textureCanvas);
     };
 
-    const animate = () => {
-      ctx.globalCompositeOperation = 'source-over';
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Enable WebGL-style additive blending for extra shine and sparks
-      ctx.globalCompositeOperation = 'lighter';
-      
-      particles.forEach((p) => {
-        p.update();
-        p.draw();
-      });
+    // Initialize Star Field Particles
+    const starCount = 1200;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(starCount * 3);
+    const colors = new Float32Array(starCount * 3);
 
-      connect();
+    for (let i = 0; i < starCount; i++) {
+      // Star positions: X and Y run from -600 to 600, Z runs from -1000 to 1000
+      positions[i * 3] = (Math.random() - 0.5) * 1200;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 1200;
+      positions[i * 3 + 2] = Math.random() * 2000 - 1000;
+
+      // Color variation: mostly pure white, some soft cyan/blue, some warm yellow/orange
+      const randColor = Math.random();
+      let r = 1.0, g = 1.0, b = 1.0;
+      if (randColor > 0.85) {
+        // Cyan-ish star
+        r = 0.8; g = 0.95; b = 1.0;
+      } else if (randColor > 0.7) {
+        // Soft yellow/orange star
+        r = 1.0; g = 0.9; b = 0.75;
+      }
+
+      colors[i * 3] = r;
+      colors[i * 3 + 1] = g;
+      colors[i * 3 + 2] = b;
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    const material = new THREE.PointsMaterial({
+      size: 3.5,
+      sizeAttenuation: true,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.85,
+      map: createCircleTexture(),
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    });
+
+    const starField = new THREE.Points(geometry, material);
+    scene.add(starField);
+
+    // Track scroll velocity for "warp speed" effect
+    const speedBoost = {
+      current: 0,
+      target: 0,
+    };
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const delta = Math.abs(currentScrollY - lastScrollY);
+      lastScrollY = currentScrollY;
+
+      // Map scroll speed to target speed boost
+      speedBoost.target = Math.min(speedBoost.target + delta * 0.12, 45);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    // Track Mouse positions for parallax
+    const mouse = { x: 0, y: 0 };
+    const mouseTarget = { x: 0, y: 0 };
+
+    const handleMouseMove = (e) => {
+      // Normalize mouse coordinates from -1 to 1
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    };
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+
+    // Handle Window Resize
+    const handleResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    };
+    window.addEventListener('resize', handleResize, { passive: true });
+
+    // Animation Loop
+    let animationFrameId;
+    
+    const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
+
+      // Speed boost interpolation & decay
+      speedBoost.current += (speedBoost.target - speedBoost.current) * 0.08;
+      speedBoost.target *= 0.93; // Gradually damp the boost when scroll stops
+
+      // Update positions
+      const posAttr = geometry.attributes.position;
+      const posArray = posAttr.array;
+
+      for (let i = 0; i < starCount; i++) {
+        const zIdx = i * 3 + 2;
+
+        // Base speed is index-dependent to create layered depth, similar to original CodePen
+        const baseSpeed = 0.5 + (i % 8) * 0.15;
+        const currentSpeed = baseSpeed + speedBoost.current * 1.5;
+
+        posArray[zIdx] += currentSpeed;
+
+        // Wrap around when star goes past camera
+        if (posArray[zIdx] > 10) {
+          posArray[zIdx] = -1000;
+          // Give it a new random X and Y so star field looks organic
+          posArray[i * 3] = (Math.random() - 0.5) * 1200;
+          posArray[i * 3 + 1] = (Math.random() - 0.5) * 1200;
+        }
+      }
+      posAttr.needsUpdate = true;
+
+      // Mouse Parallax interpolation
+      mouseTarget.x += (mouse.x - mouseTarget.x) * 0.05;
+      mouseTarget.y += (mouse.y - mouseTarget.y) * 0.05;
+
+      // Move camera slightly
+      camera.position.x = mouseTarget.x * 30;
+      camera.position.y = mouseTarget.y * 30;
+      camera.lookAt(0, 0, 0);
+
+      renderer.render(scene, camera);
     };
 
     animate();
 
+    // Cleanup Resources
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseleave', handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', handleResize);
+
+      // Dispose Three.js objects
+      geometry.dispose();
+      material.dispose();
+      if (material.map) material.map.dispose();
+      renderer.dispose();
     };
   }, []);
 

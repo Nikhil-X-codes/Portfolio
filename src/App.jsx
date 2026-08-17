@@ -20,6 +20,26 @@ export default function App() {
     return () => window.clearTimeout(timer)
   }, [])
 
+  // Lock scroll while splash screen is active, and force scroll to top on exit
+  useEffect(() => {
+    if (showSplash) {
+      document.body.style.overflow = 'hidden'
+      document.documentElement.style.overflow = 'hidden'
+      window.scrollTo(0, 0)
+    } else {
+      document.body.style.overflow = ''
+      document.documentElement.style.overflow = ''
+      const timer = setTimeout(() => {
+        window.scrollTo(0, 0)
+      }, 50)
+      return () => clearTimeout(timer)
+    }
+    return () => {
+      document.body.style.overflow = ''
+      document.documentElement.style.overflow = ''
+    }
+  }, [showSplash])
+
   useEffect(() => {
     if (showSplash) return;
 

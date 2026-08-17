@@ -52,7 +52,7 @@ export default function Navbar() {
 
   const socialItems = [
     { id: 'github', label: 'GitHub', icon: Github, type: 'social', href: 'https://github.com/Nikhil-X-codes' },
-    { id: 'linkedin', label: 'LinkedIn', icon: Linkedin, type: 'social', href: 'https://www.linkedin.com/in/nikhil2310' },
+    { id: 'linkedin', label: 'LinkedIn', icon: Linkedin, type: 'social', href: 'https://www.linkedin.com/in/nikhil2310/' },
     { id: 'codolio', label: 'Codolio', icon: CodeBracketsIcon, type: 'social', href: 'https://codolio.com/profile/J6G0HHGi' },
   ];
 

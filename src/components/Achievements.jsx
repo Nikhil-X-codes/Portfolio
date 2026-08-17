@@ -6,22 +6,22 @@ import { BorderBeam } from './ui/BorderBeam.jsx';
 
 const achievementsData = [
   // Hackathons
-{
-  id: 'flipkart-grid-8',
-  title: 'Flipkart GRiD 8.0 – Round 2 Participant',
-  year: '2026',
-  category: 'hackathons',
-  description:
-    'Qualified for Round 2 of Flipkart GRiD 8.0, participating in the solving competitive programming and problem-solving challenges.',
-},
   {
-  id: 'hackvega-2',
-  title: 'HackVega 2.0 – Round 2 Participant',
-  year: '2026',
-  category: 'hackathons',
-  description:
-    'Qualified for Round 2 of HackVega 2.0, participating in the national-level hackathon.',
-},
+    id: 'flipkart-grid-8',
+    title: 'Flipkart GRiD 8.0 – Round 3 Qualifier',
+    year: '2026',
+    category: 'hackathons',
+    description:
+      'Successfully advanced up to Round 3 of Flipkart GRiD 8.0, competing in highly competitive programming, web development, and algorithmic challenges.',
+  },
+  {
+    id: 'hackvega-2',
+    title: 'HackVega 2.0 – Round 2 Participant',
+    year: '2026',
+    category: 'hackathons',
+    description:
+      'Qualified for Round 2 of HackVega 2.0, participating in the national-level hackathon.',
+  },
   {
     id: 'techexpo-iitg',
     title: 'TechExpo IIT Guwahati Participant',
@@ -32,11 +32,11 @@ const achievementsData = [
   },
   {
     id: 'hackorbit-2025',
-    title: 'HackOrbit 2025 National Hackathon',
+    title: 'HackOrbit 2025 – Top 19 National Rank',
     year: '2025',
     category: 'hackathons',
     description:
-      'Finalist in HackOrbit 2025 National Hackathon organized by Madhav Institute of Technology and Science (MITS), Gwalior as Team Trinity.Codes.',
+      'Secured a Top 19 national rank and advanced as a finalist in the HackOrbit 2025 National Hackathon organized by Madhav Institute of Technology and Science (MITS), Gwalior as Team Trinity.Codes.',
   },
 
   // Certifications
