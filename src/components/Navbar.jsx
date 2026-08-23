@@ -27,7 +27,12 @@ export default function Navbar() {
     let lastScroll = window.scrollY;
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScroll && currentScrollY > 80) {
+      const delta = currentScrollY - lastScroll;
+
+      // Only trigger if scroll delta is meaningful (avoids RAF micro-ticks)
+      if (Math.abs(delta) < 4) return;
+
+      if (delta > 0 && currentScrollY > 80) {
         // Scroll down: hide navbar
         setVisible(false);
       } else {

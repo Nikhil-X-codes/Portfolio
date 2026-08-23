@@ -86,9 +86,8 @@ export default function Education() {
           <div className="absolute left-6 sm:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-orange-500/60 via-orange-500/20 to-transparent z-0" />
 
           <div className="flex flex-col gap-10 sm:gap-12">
-            {educationData.map((edu, index) => {
+            {educationData.map((edu) => {
               const Icon = edu.icon;
-              const progress = edu.status === 'Pursuing' ? 65 : 100;
               return (
                 <motion.div
                   key={edu.id}

@@ -26,8 +26,9 @@ const itemVariants = {
   },
 };
 
+const roles = ['Keep Building', 'Lifelong Learner', 'AI/ML Enthusiast', 'Problem Solver'];
+
 export default function Home({ isSplashActive = true }) {
-  const roles = ['Keep Building', 'Lifelong Learner', 'AI/ML Enthusiast', 'Problem Solver'];
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
@@ -52,13 +53,7 @@ export default function Home({ isSplashActive = true }) {
     }, isDeleting ? 50 : 100);
 
     return () => clearTimeout(timeout);
-  }, [displayText, isDeleting, currentRoleIndex, roles]);
-
-  const handleRipple = (event) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    event.currentTarget.style.setProperty('--ripple-x', `${event.clientX - rect.left}px`);
-    event.currentTarget.style.setProperty('--ripple-y', `${event.clientY - rect.top}px`);
-  };
+  }, [displayText, isDeleting, currentRoleIndex]);
 
   return (
     <section id="home" className="relative ui-section min-h-screen flex items-center justify-center overflow-hidden">

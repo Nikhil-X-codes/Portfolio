@@ -6,9 +6,7 @@ import DecryptedText from './ui/DecryptedText';
 
 export default function Projects() {
   const [activeDeckIndex, setActiveDeckIndex] = useState(0);
-  const carouselLeftRef = useRef(null);
-  const carouselRightRef = useRef(null);
-  const scrollIntervalLeftRef = useRef(null);
+   const carouselLeftRef = useRef(null);
   const scrollIntervalRightRef = useRef(null);
 
   const projects = useMemo(
@@ -121,6 +119,22 @@ export default function Projects() {
     'Docker'
   ],
 },
+{
+  id: 11,
+
+  title: 'ArenaRank — Live Gamified Leaderboard',
+
+  displayText: 'ArenaRank',
+
+  category: 'Full Stack',
+
+  description:
+    'Real-time gamified leaderboard application using Redis for dynamic rankings, Pub/Sub and SSE for live synchronization, and BullMQ for asynchronous score processing.',
+
+  href: 'https://github.com/Nikhil-X-codes/Redis-Project',
+
+  techStack: ['Node.js', 'Express.js', 'Redis', 'BullMQ', 'JavaScript'],
+},
     ],
     []
   );
@@ -160,6 +174,22 @@ export default function Projects() {
       }
     };
   }, [projects.length]);
+
+  // ── PREVENT CAROUSEL SCROLL BUBBLING ──
+  useEffect(() => {
+    const carousel = carouselLeftRef.current;
+    if (!carousel) return;
+
+    const stopPropagation = (e) => e.stopPropagation();
+    
+    carousel.addEventListener('wheel', stopPropagation, { passive: false });
+    carousel.addEventListener('touchmove', stopPropagation, { passive: false });
+
+    return () => {
+      carousel.removeEventListener('wheel', stopPropagation);
+      carousel.removeEventListener('touchmove', stopPropagation);
+    };
+  }, []);
 
   const handleDeckClick = (idx) => {
     setActiveDeckIndex(idx);
@@ -267,8 +297,8 @@ export default function Projects() {
             {/* Continuous Vertical Carousel Container */}
             <div
               ref={carouselLeftRef}
-              className="relative overflow-hidden rounded-lg"
-              style={{ height: 520 }}
+              className="relative rounded-lg carousel-no-scrollbar"
+              style={{ height: 520, overflowY: 'scroll', overscrollBehavior: 'contain' }}
             >
               {/* Fade-out masks top & bottom */}
               <div className="pointer-events-none absolute top-0 left-0 right-0 h-12 z-20 bg-gradient-to-b from-[#0d0d0d]/90 to-transparent" />

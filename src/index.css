@@ -695,53 +695,7 @@ main {
   animation: glowPulse 3s ease-in-out infinite;
 }
 
-/* Gradient border sweep on hover */
-@keyframes borderSweep {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
 
-.gradient-border-sweep {
-  position: relative;
-}
-
-.gradient-border-sweep::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 2px; /* thicker border */
-  /* Dark but highly saturated running RGB gradient for maximum visibility */
-  background: linear-gradient(135deg, 
-    rgba(239, 68, 68, 0.75),    /* Saturated Red */
-    rgba(59, 130, 246, 0.75),   /* Saturated Blue */
-    rgba(168, 85, 247, 0.75),   /* Saturated Purple */
-    rgba(16, 185, 129, 0.75),   /* Saturated Emerald */
-    rgba(239, 68, 68, 0.75)     /* Loop back */
-  );
-  background-size: 300% 300%;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0.45; /* highly visible default running glow */
-  transition: opacity 0.4s ease, padding 0.4s ease;
-  pointer-events: none;
-  z-index: 5;
-  animation: borderSweep 6s linear infinite;
-}
-
-.gradient-border-sweep:hover::before {
-  opacity: 1.0; /* full brightness on hover */
-  padding: 3px; /* extra thick for glowing border pop on hover */
-  animation: borderSweep 2.8s linear infinite; /* accelerates */
-}
 
 /* Tag shimmer pass on hover */
 @keyframes shimmerPass {
@@ -780,11 +734,7 @@ main {
   animation: shimmerPass 0.8s ease-in-out forwards;
 }
 
-/* Browser-compatible 3D backface visibility utility */
-.backface-hidden {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
+
 
 /* Smooth Scroll Behavior */
 html {
@@ -812,6 +762,21 @@ html {
     transition-duration: 0s !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Scroll Containment and Utility Styles */
+html, body {
+  overscroll-behavior: auto;
+}
+
+.carousel-no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 

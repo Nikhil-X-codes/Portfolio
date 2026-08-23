@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Star, CheckCircle, Calendar } from 'lucide-react';
+import { Star, CheckCircle } from 'lucide-react';
 import DecryptedText from './ui/DecryptedText';
 import { BorderBeam } from './ui/BorderBeam.jsx';
 
@@ -36,7 +36,7 @@ const achievementsData = [
     year: '2025',
     category: 'hackathons',
     description:
-      'Secured a Top 19 national rank and advanced as a finalist in the HackOrbit 2025 National Hackathon organized by Madhav Institute of Technology and Science (MITS), Gwalior as Team Trinity.Codes.',
+      'Secured a Top 10 national rank and advanced as a finalist in the HackOrbit 2025 National Hackathon organized by Madhav Institute of Technology and Science (MITS), Gwalior as Team Trinity.Codes.',
   },
 
   // Certifications
@@ -55,14 +55,6 @@ const achievementsData = [
     category: 'certifications',
     description:
       'Completed Cisco Networking Academy certification covering fundamentals of Data Science and analytical concepts.',
-  },
-  {
-    id: 'python-essentials',
-    title: 'Python Essentials 1',
-    year: '2024',
-    category: 'certifications',
-    description:
-      'Completed Python Essentials 1 by Cisco Networking Academy and OpenEDG Python Institute focusing on Python programming fundamentals.',
   },
   {
     id: 'generative-ai',
@@ -122,7 +114,8 @@ export default function Achievements() {
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.08 }}
           className="flex flex-wrap items-center gap-2.5 sm:gap-4 mb-12"
         >
-          {tabs.map(({ id, label, icon: Icon }) => {
+          {tabs.map((tab) => {
+            const { id, label, icon: Icon } = tab;
             const isActive = activeTab === id;
             return (
               <button

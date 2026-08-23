@@ -5,7 +5,7 @@ import DecryptedText from './ui/DecryptedText'
 import {
   SiJavascript, SiPython, SiPostgresql, SiCplusplus,
   SiReact, SiNextdotjs, SiNodedotjs, SiExpress, SiTailwindcss,
-  SiMongodb, SiSupabase, SiNumpy, SiPandas, SiScikitlearn, SiPytorch,
+  SiMongodb, SiSupabase, SiRedis, SiNumpy, SiPandas, SiScikitlearn,
   SiPostman, SiHuggingface, SiGithub, SiLangchain, SiDocker, SiFastapi
 } from 'react-icons/si'
 import { FaDatabase } from 'react-icons/fa6'
@@ -37,6 +37,7 @@ const categories = [
       { name: 'Node.js', icon: SiNodedotjs, repo: 'https://github.com/nodejs/node' },
       { name: 'Express', icon: SiExpress, repo: 'https://github.com/expressjs/express' },
       { name: 'Tailwind CSS', icon: SiTailwindcss, repo: 'https://github.com/tailwindlabs/tailwindcss' },
+      { name: 'FastAPI', icon: SiFastapi, repo: 'https://github.com/fastapi/fastapi' },
     ],
   },
   {
@@ -49,6 +50,7 @@ const categories = [
       { name: 'PostgreSQL', icon: SiPostgresql, repo: 'https://github.com/postgres/postgres' },
       { name: 'MongoDB', icon: SiMongodb, repo: 'https://github.com/mongodb/mongo' },
       { name: 'Supabase', icon: SiSupabase, repo: 'https://github.com/supabase/supabase' },
+      { name: 'Redis', icon: SiRedis, repo: 'https://github.com/redis/redis' },
     ],
   },
   {
@@ -61,10 +63,8 @@ const categories = [
       { name: 'NumPy', icon: SiNumpy, repo: 'https://github.com/numpy/numpy' },
       { name: 'Pandas', icon: SiPandas, repo: 'https://github.com/pandas-dev/pandas' },
       { name: 'scikit-learn', icon: SiScikitlearn, repo: 'https://github.com/scikit-learn/scikit-learn' },
-      { name: 'PyTorch', icon: SiPytorch, repo: 'https://github.com/pytorch/pytorch' },
       { name: 'LangChain', icon: SiLangchain, repo: 'https://github.com/langchain-ai/langchain' },
       { name: 'ChromaDB', icon: FaDatabase, repo: 'https://github.com/chroma-core/chroma' },
-      { name: 'FastAPI', icon: SiFastapi, repo: 'https://github.com/fastapi/fastapi' },
     ],
   },
   {
