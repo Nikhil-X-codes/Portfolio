@@ -32,7 +32,7 @@ const achievementsData = [
   },
   {
     id: 'hackorbit-2025',
-    title: 'HackOrbit 2025 – Top 19 National Rank',
+    title: 'HackOrbit 2025 – Top 10 National Rank',
     year: '2025',
     category: 'hackathons',
     description:
