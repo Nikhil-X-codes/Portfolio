@@ -1,5 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+/* Inter font is self-hosted via @fontsource/inter — imported in main.jsx */
+/* This eliminates the render-blocking Google Fonts external request */
 @import "tailwindcss";
+
 
 
 :root {

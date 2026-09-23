@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, lazy, Suspense } from 'react'
 import Navbar from './components/Navbar'
 import Home from './components/Home'
 import Projects from './components/Projects'
 import Skills from './components/Skills'
 import ContactUs from './components/ContactUs'
 import Achievements from './components/Achievements'
-import Education from './components/Education'
-import SplashCursor from './components/SplashCursor'
+import Experience from './components/Experience'
+const SplashCursor = lazy(() => import('./components/SplashCursor'))
 import IntroSplash from './components/IntroSplash'
 import ScrollProgressBar from './components/ui/ScrollProgressBar.jsx'
-import ParticlesBackground from './components/ui/ParticlesBackground.jsx'
+const ParticlesBackground = lazy(() => import('./components/ui/ParticlesBackground.jsx'))
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -96,18 +96,22 @@ export default function App() {
   return (
     <div className="relative w-full min-h-screen overflow-x-hidden">
       <ScrollProgressBar />
-      <ParticlesBackground />
+      <Suspense fallback={null}>
+        <ParticlesBackground />
+      </Suspense>
 
       {/* Intro Splash Curtain */}
       {showSplash && <IntroSplash onEnter={() => setShowSplash(false)} />}
 
       {/* Interactive fluid splash cursor overlay */}
-      <SplashCursor
-        SIM_RESOLUTION={128}
-        DYE_RESOLUTION={512}
-        COLOR="#EF4444"
-        RAINBOW_MODE={true}
-      />
+      <Suspense fallback={null}>
+        <SplashCursor
+          SIM_RESOLUTION={128}
+          DYE_RESOLUTION={512}
+          COLOR="#EF4444"
+          RAINBOW_MODE={true}
+        />
+      </Suspense>
 
       {isLoading && (
         <div className="loading-screen">
@@ -123,7 +127,7 @@ export default function App() {
           <Projects />
           <Skills />
           <Achievements />
-          <Education />
+          <Experience />
           <ContactUs />
         </main>
       </div>

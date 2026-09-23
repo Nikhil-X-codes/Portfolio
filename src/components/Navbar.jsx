@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Home, FolderGit2, Code2, Trophy, Mail, Github, Linkedin, GraduationCap } from 'lucide-react';
+import { Home, FolderGit2, Code2, Trophy, Mail, Github, Linkedin, Briefcase } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 // Custom Codolio brackets icon as SVG — matches lucide icon sizing
@@ -51,7 +51,7 @@ export default function Navbar() {
     { id: 'projects', label: 'Projects', icon: FolderGit2, type: 'nav' },
     { id: 'about', label: 'Tech Stack', icon: Code2, type: 'nav' },
     { id: 'achievements', label: 'Achievements', icon: Trophy, type: 'nav' },
-    { id: 'education', label: 'Education', icon: GraduationCap, type: 'nav' },
+    { id: 'experience', label: 'Experience', icon: Briefcase, type: 'nav' },
     { id: 'contact', label: 'Contact', icon: Mail, type: 'nav' },
   ];
 

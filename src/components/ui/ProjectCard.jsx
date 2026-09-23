@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { ExternalLink, Github, Globe, Cpu, Layers, Sparkles } from 'lucide-react';
 import { BorderBeam } from './BorderBeam.jsx';
 
-export default function ProjectCard({ project }) {
+const ProjectCard = memo(function ProjectCard({ project }) {
   const [isHovered, setIsHovered] = useState(false);
 
   const getCategoryIcon = (category) => {
@@ -118,4 +118,6 @@ export default function ProjectCard({ project }) {
       </div>
     </a>
   );
-}
+});
+
+export default ProjectCard;

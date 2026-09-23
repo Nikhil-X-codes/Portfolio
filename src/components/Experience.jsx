@@ -1,0 +1,207 @@
+import { motion } from 'framer-motion';
+import { Briefcase, CalendarDays, MapPin, ExternalLink } from 'lucide-react';
+import DecryptedText from './ui/DecryptedText';
+import { BorderBeam } from './ui/BorderBeam.jsx';
+
+const experienceData = [
+  {
+    id: 'stackx',
+    role: 'Full Stack Developer Intern',
+    company: 'StackX',
+    period: 'June 2025 – Aug 2025',
+    location: 'Remote',
+    status: 'Completed',
+    type: 'Internship',
+    highlights: [
+      'Full Stack Development',
+      'React & Node.js',
+      'REST APIs',
+      'MongoDB',
+    ],
+    description:
+      'Developed and shipped full-stack features across the product, collaborating with cross-functional teams on real-world production codebases.',
+  },
+  {
+    id: 'mckinsey',
+    role: 'Forward Program Participant',
+    company: 'McKinsey & Company',
+    period: 'Current',
+    location: 'Online',
+    status: 'Ongoing',
+    type: 'Program',
+    highlights: [
+      'Problem Solving',
+      'Data-Driven Thinking',
+      'Leadership',
+      'Business Analytics',
+    ],
+    description:
+      'Selective McKinsey Forward program focused on building future-ready skills in structured problem solving, data literacy, and leadership.',
+  },
+];
+
+const timelineVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.14 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: 'easeOut' },
+  },
+};
+
+export default function Experience() {
+  return (
+    <section
+      id="experience"
+      className="relative ui-section py-16 sm:py-24 overflow-hidden"
+    >
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          className="mb-10 sm:mb-14"
+        >
+          <p className="ui-kicker mb-2">Career Journey</p>
+          <h2 className="ui-title mb-3">
+            <DecryptedText
+              text="Experience"
+              animateOn="inViewHover"
+              revealDirection="center"
+              speed={55}
+              maxIterations={12}
+            />
+          </h2>
+          <div className="ui-divider mt-4"></div>
+        </motion.div>
+
+        {/* Timeline */}
+        <motion.div
+          className="relative"
+          variants={timelineVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          {/* Vertical timeline line */}
+          <div className="absolute left-6 sm:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-orange-500/60 via-orange-500/20 to-transparent z-0" />
+
+          <div className="flex flex-col gap-10 sm:gap-12">
+            {experienceData.map((exp) => (
+              <motion.div
+                key={exp.id}
+                variants={cardVariants}
+                className="relative pl-16 sm:pl-20 group"
+              >
+                {/* Timeline node */}
+                <div className="absolute left-3 sm:left-5 top-4 z-10 flex items-center justify-center">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 border-orange-500/50 bg-[#0a0a0a] flex items-center justify-center group-hover:border-orange-500 group-hover:shadow-[0_0_16px_rgba(249,115,22,0.35)] transition-all duration-400">
+                    <Briefcase className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-orange-500" />
+                  </div>
+                </div>
+
+                {/* Connecting dot pulse */}
+                <div className="absolute left-[1.15rem] sm:left-[1.4rem] top-[1.15rem] sm:top-[1.1rem] w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-orange-500/20 animate-ping pointer-events-none z-0" />
+
+                {/* Card */}
+                <div className="relative rounded-2xl border border-slate-800/80 bg-slate-950/90 p-5 sm:p-7 transition-all duration-300 hover:border-orange-500/40 hover:bg-slate-900/70 hover:shadow-[0_8px_40px_rgba(249,115,22,0.08)] overflow-hidden">
+                  <BorderBeam size={130} duration={8} borderWidth={1.5} colorFrom="#f97316" colorTo="#3b82f6" />
+
+                  {/* Subtle grid texture */}
+                  <div className="absolute inset-0 bg-[linear-gradient(to_right,#f9731604_1px,transparent_1px),linear-gradient(to_bottom,#f9731604_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
+
+                  {/* Glow orb */}
+                  <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-orange-500/5 blur-3xl pointer-events-none group-hover:bg-orange-500/10 transition-all duration-500" />
+
+                  <div className="relative z-10">
+                    {/* Top row: status badge, type badge, period */}
+                    <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] sm:text-xs font-semibold tracking-wide border ${
+                            exp.status === 'Ongoing'
+                              ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                              : 'bg-orange-500/10 text-orange-400 border-orange-500/15'
+                          }`}
+                        >
+                          <span
+                            className={`w-1.5 h-1.5 rounded-full ${
+                              exp.status === 'Ongoing'
+                                ? 'bg-emerald-400 animate-pulse'
+                                : 'bg-orange-400'
+                            }`}
+                          />
+                          {exp.status}
+                        </span>
+
+                        <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-[10px] sm:text-xs font-semibold tracking-wide border bg-slate-800/60 text-slate-300 border-slate-700/50">
+                          {exp.type}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-1.5 text-xs text-slate-500 font-mono">
+                        <CalendarDays className="w-3.5 h-3.5" />
+                        <span>{exp.period}</span>
+                      </div>
+                    </div>
+
+                    {/* Role */}
+                    <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-orange-400 transition-colors tracking-tight mb-1">
+                      {exp.role}
+                    </h3>
+
+                    {/* Company + Location row */}
+                    <div className="flex flex-wrap items-center gap-3 text-sm text-slate-400 mb-4">
+                      <span className="font-semibold text-orange-500/80">{exp.company}</span>
+                      <span className="flex items-center gap-1">
+                        <MapPin className="w-3.5 h-3.5 text-slate-500" />
+                        {exp.location}
+                      </span>
+                      {exp.href && (
+                        <a
+                          href={exp.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-xs text-orange-400/70 hover:text-orange-400 transition-colors"
+                        >
+                          <ExternalLink className="w-3 h-3" />
+                          Learn more
+                        </a>
+                      )}
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-sm text-slate-400 leading-relaxed mb-4">
+                      {exp.description}
+                    </p>
+
+                    {/* Skill tags */}
+                    <div className="flex flex-wrap gap-2">
+                      {exp.highlights.map((h, i) => (
+                        <span
+                          key={i}
+                          className="px-2.5 py-1 text-[10px] sm:text-xs font-medium rounded-full bg-white/5 text-slate-300 border border-white/5 hover:border-orange-500/30 hover:text-orange-400 transition-colors"
+                        >
+                          {h}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}

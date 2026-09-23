@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect, useRef } from 'react';
+import { useMemo, useState, useEffect, useRef, useCallback, memo } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Github } from 'lucide-react';
 import ProjectCard from './ui/ProjectCard';
@@ -19,7 +19,7 @@ export default function Projects() {
         description:
           'A full-stack video streaming platform with upload, search, likes, comments, subscriptions and playlist management.',
         href: 'https://github.com/Nikhil-X-codes/Vidcast',
-        techStack: ['React', 'Node.js', 'MongoDB', 'Tailwind',],
+        techStack: ['React', 'Node.js', 'MongoDB', 'Tailwind'],
       },
       {
         id: 2,
@@ -29,17 +29,7 @@ export default function Projects() {
         description:
           'A bus ticket booking system with virtual credit cards, interactive seat selection and full booking history.',
         href: 'https://github.com/Nikhil-X-codes/BusEase',
-        techStack: ['React', 'Tailwind', 'MongoDB','Express'],
-      },
-      {
-        id: 3,
-        title: 'Bankruptcy Prediction',
-        displayText: 'ML Predictor',
-        category: 'AI',
-        description:
-          'ML classification model predicting company bankruptcy likelihood using financial ratios and ensemble methods.',
-        href: 'https://github.com/Nikhil-X-codes/Company-Bankruptcy-Prediction',
-        techStack: ['Python', 'Scikit-Learn', 'Core ML'],
+        techStack: ['React', 'Tailwind', 'MongoDB', 'Express'],
       },
       {
         id: 4,
@@ -52,89 +42,65 @@ export default function Projects() {
         techStack: ['React', 'HuggingFace', 'Tailwind'],
       },
       {
-  id: 5,
-  title: 'AI Content & Utility Suite',
-  displayText: 'AI Utility Suite',
-  category: 'AI',
-  description:
-    'Unified AI toolkit for content generation, resume analysis, sentiment analysis, and AI-content detection with lightweight PERN architecture.',
-  href: 'https://github.com/Nikhil-X-codes/WebDev-with-AI-Intergration',
-  techStack: ['React', 'Node.js', 'Express', 'PostgreSQL', 'HuggingFace'],
-},
-{
-  id: 6,
-  title: 'WhatsApp Chat Analysis',
-  displayText: 'Chat Analyzer',
-  category: 'Data Analytics',
-  description:
-    'WhatsApp chat analytics platform providing message insights, activity trends, word frequency, emoji analysis, and participant statistics through interactive visualizations.',
-  href: 'https://github.com/Nikhil-X-codes/Whatsapp-chat-analysis',
-  techStack: ['Python', 'Streamlit', 'ML Library'],
-},
-{
-  id: 7,
-  title: 'Neutrosophic Traffic Management',
-  displayText: 'Smart Traffic AI',
-  category: 'AI',
-  description:
-    'AI-powered traffic management system using Neutrosophic Logic and deep learning models to analyze vehicle density, detect obstacles, and automate traffic signal decisions.',
-  href: 'https://github.com/Nikhil-X-codes/Neutrosophic_logic_based_Traffic_Management_System',
-  techStack: ['Python','YOLO', 'OpenCV', 'Neutrosophic Logic'],
-},
-{
-  id: 8,
-  title: 'LSTEM IoT Attack Detection',
-  displayText: 'LSTEM Security',
-  category: 'Cybersecurity',
-  description:
-    'Trust-aware IoT attack detection framework combining behavioral trust scoring with machine learning to improve malicious traffic classification in resource-constrained networks.',
-  href: 'https://github.com/Nikhil-X-codes/LSTEM',
-  techStack: ['Python', 'Machine Learning', 'IoT', 'Scikit-learn'],
-},
-{
-  id: 9,
-  title: 'Iris Recognition System',
-  displayText: 'Iris AI',
-  category: 'AI',
-  description:
-    'Deep learning-based biometric authentication system using EfficientNetV2-S for high-accuracy iris recognition, real-time verification, and secure user identification.',
-  href: 'https://github.com/Nikhil-X-codes/Iris-Detection',
-  techStack: ['Python', 'PyTorch', 'OpenCV'],
-},
-{
-  id: 10,
-  title: 'Medzee.ai',
-  displayText: 'Medzee.AI',
-  category: 'AI',
-  description:
-    'AI-powered healthcare assistant that analyzes medical reports and prescriptions using OCR, LLMs, and RAG. Features report interpretation, medicine explanations, health analytics dashboard, voice-enabled AI chat, and personalized medical insights.',
-  href: 'https://github.com/Nikhil-X-codes/AI-Powered-Health',
-  techStack: [
-    'Next.js',
-    'FastAPI',
-    'PostgreSQL',
-    'Prisma',
-    'LangChain',
-    'RAG',
-    'Docker'
-  ],
-},
-{
-  id: 11,
-
-  title: 'ArenaRank — Live Gamified Leaderboard',
-
-  displayText: 'ArenaRank',
-
-  category: 'Full Stack',
-
-  description:
-    'Real-time gamified leaderboard application using Redis for dynamic rankings, Pub/Sub and SSE for live synchronization, and BullMQ for asynchronous score processing.',
-
-  href: 'https://github.com/Nikhil-X-codes/Redis-Project',
-
-  techStack: ['Node.js', 'Express.js', 'Redis', 'BullMQ', 'JavaScript'],
-},
+        id: 5,
+        title: 'Multi-Agent CLI Orchestration',
+        displayText: 'Multi-Agent CLI Orchestration',
+        category: 'AI',
+        description:
+          'Production-grade multi-agent AI system with 6 specialized agents orchestrated via ThreadPoolExecutor for autonomous end-to-end code generation, review, and self-healing debug loops.',
+        href: 'https://github.com/Nikhil-X-codes/Multi-Agent-AI-Coding-System',
+        techStack: ['Python', 'ChromaDB', 'Groq'],
+      },
+      {
+        id: 6,
+        title: 'WhatsApp Chat Analysis',
+        displayText: 'Chat Analyzer',
+        category: 'Data Analytics',
+        description:
+          'WhatsApp chat analytics platform providing message insights, activity trends, word frequency, emoji analysis, and participant statistics through interactive visualizations.',
+        href: 'https://github.com/Nikhil-X-codes/Whatsapp-chat-analysis',
+        techStack: ['Python', 'Streamlit', 'ML Library'],
+      },
+      {
+        id: 7,
+        title: 'Neutrosophic Traffic Management',
+        displayText: 'Smart Traffic AI',
+        category: 'AI',
+        description:
+          'AI-powered traffic management system using Neutrosophic Logic and deep learning models to analyze vehicle density, detect obstacles, and automate traffic signal decisions.',
+        href: 'https://github.com/Nikhil-X-codes/Neutrosophic_logic_based_Traffic_Management_System',
+        techStack: ['Python', 'YOLO', 'OpenCV', 'Neutrosophic Logic'],
+      },
+      {
+        id: 8,
+        title: 'LSTEM IoT Attack Detection',
+        displayText: 'LSTEM Security',
+        category: 'Cybersecurity',
+        description:
+          'Trust-aware IoT attack detection framework combining behavioral trust scoring with machine learning to improve malicious traffic classification in resource-constrained networks.',
+        href: 'https://github.com/Nikhil-X-codes/LSTEM',
+        techStack: ['Python', 'Machine Learning', 'IoT', 'Scikit-learn'],
+      },
+      {
+        id: 9,
+        title: 'Iris Recognition System',
+        displayText: 'Iris AI',
+        category: 'AI',
+        description:
+          'Deep learning-based biometric authentication system using EfficientNetV2-S for high-accuracy iris recognition, real-time verification, and secure user identification.',
+        href: 'https://github.com/Nikhil-X-codes/Iris-Detection',
+        techStack: ['Python', 'PyTorch', 'OpenCV'],
+      },
+      {
+        id: 10,
+        title: 'Medzee.ai',
+        displayText: 'Medzee.AI',
+        category: 'AI',
+        description:
+          'AI-powered healthcare assistant that analyzes medical reports and prescriptions using OCR, LLMs, and RAG. Features report interpretation, medicine explanations, health analytics dashboard, voice-enabled AI chat, and personalized medical insights.',
+        href: 'https://github.com/Nikhil-X-codes/AI-Powered-Health',
+        techStack: ['Next.js', 'FastAPI', 'PostgreSQL', 'Prisma', 'LangChain', 'RAG', 'Docker'],
+      },
     ],
     []
   );
@@ -191,17 +157,17 @@ export default function Projects() {
     };
   }, []);
 
-  const handleDeckClick = (idx) => {
+  const handleDeckClick = useCallback((idx) => {
     setActiveDeckIndex(idx);
-  };
+  }, []);
 
-  const getVisualOffset = (idx) => {
+  const getVisualOffset = useCallback((idx) => {
     let diff = idx - activeDeckIndex;
     if (diff < 0) diff += projects.length;
     return diff;
-  };
+  }, [activeDeckIndex, projects.length]);
 
-  const getFanTransform = (visualOffset) => {
+  const getFanTransform = useCallback((visualOffset) => {
     const totalCards = projects.length;
     switch (visualOffset) {
       case 0:
@@ -241,9 +207,9 @@ export default function Projects() {
           zIndex: totalCards - 2,
         };
     }
-  };
+  }, [projects.length]);
 
-  const isGithubLink = (url) => url?.includes('github.com');
+  const isGithubLink = useCallback((url) => url?.includes('github.com'), []);
 
   return (
     <section id="projects" className="relative ui-section overflow-hidden py-16 sm:py-24 bg-transparent">
@@ -398,7 +364,7 @@ export default function Projects() {
 }
 
 /* ── Interactive Spotlight Card with 3D Tilt and Cursor Border Glowing Spotlight ── */
-function SpotlightCard({
+const SpotlightCard = memo(function SpotlightCard({
   project,
   idx,
   isFront,
@@ -590,4 +556,4 @@ function SpotlightCard({
       </div>
     </motion.div>
   );
-}
+});
