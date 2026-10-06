@@ -8,7 +8,7 @@ const experienceData = [
     id: 'stackx',
     role: 'Full Stack Developer Intern',
     company: 'StackX',
-    period: 'June 2025 – Aug 2025',
+    period: 'June 2026 – Aug 2026',
     location: 'Remote',
     status: 'Completed',
     type: 'Internship',
