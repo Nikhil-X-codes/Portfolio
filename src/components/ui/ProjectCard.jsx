@@ -98,7 +98,7 @@ const ProjectCard = memo(function ProjectCard({ project }) {
         <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-orange-500 transition-colors tracking-tight">
           {project.title}
         </h3>
-        <p className="text-xs sm:text-sm text-slate-400 mt-1.5 line-clamp-2 leading-relaxed flex-grow">
+        <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed flex-grow">
           {project.description}
         </p>
 

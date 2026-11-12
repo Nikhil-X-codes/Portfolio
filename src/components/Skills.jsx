@@ -6,7 +6,7 @@ import {
   SiJavascript, SiPython, SiPostgresql, SiCplusplus,
   SiReact, SiNextdotjs, SiNodedotjs, SiExpress, SiTailwindcss,
   SiMongodb, SiSupabase, SiRedis, SiNumpy, SiPandas, SiScikitlearn,
-  SiPostman, SiHuggingface, SiGithub, SiLangchain, SiDocker, SiFastapi
+  SiGit, SiGithubactions, SiKubernetes, SiLangchain, SiDocker, SiFastapi
 } from 'react-icons/si'
 import { FaDatabase } from 'react-icons/fa6'
 
@@ -68,16 +68,16 @@ const categories = [
     ],
   },
   {
-    id: 'tools',
-    label: 'Tools & Platforms',
+    id: 'devops',
+    label: 'DevOps',
     color: '#FAC775',
     orbitR: 17.5,
     speed: 0.03,
     skills: [
-      { name: 'Postman', icon: SiPostman },
-      { name: 'HuggingFace', icon: SiHuggingface, repo: 'https://github.com/huggingface/transformers' },
-      { name: 'Git & GitHub', icon: SiGithub, repo: 'https://github.com/git/git' },
+      { name: 'Git', icon: SiGit, repo: 'https://github.com/git/git' },
+      { name: 'CI/CD', icon: SiGithubactions, repo: 'https://github.com/features/actions' },
       { name: 'Docker', icon: SiDocker, repo: 'https://github.com/docker' },
+      { name: 'Kubernetes', icon: SiKubernetes, repo: 'https://github.com/kubernetes/kubernetes' },
     ],
   },
 ]
