@@ -2,7 +2,7 @@ import { useState, memo } from 'react';
 import { ExternalLink, Github, Globe, Cpu, Layers, Sparkles } from 'lucide-react';
 import { BorderBeam } from './BorderBeam.jsx';
 
-const ProjectCard = memo(function ProjectCard({ project }) {
+const ProjectCard = memo(function ProjectCard({ project, tabIndex }) {
   const [isHovered, setIsHovered] = useState(false);
 
   const getCategoryIcon = (category) => {
@@ -23,6 +23,7 @@ const ProjectCard = memo(function ProjectCard({ project }) {
   return (
     <a
       href={project.href}
+      tabIndex={tabIndex}
       target="_blank"
       rel="noopener noreferrer"
       className="group relative flex flex-col rounded-xl bg-[#121212] border border-white/5 transition-all duration-300 hover:border-orange-500/30 hover:bg-[#161616] hover:scale-[1.02] hover:shadow-[0_20px_50px_rgba(249,115,22,0.12)] overflow-hidden select-none cursor-pointer no-underline"

@@ -513,7 +513,7 @@ main {
 
 
 @media (prefers-reduced-motion: reduce) {
-  * {
+  :where(:not(.project-film-track)) {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
@@ -757,7 +757,7 @@ html {
 
 /* Accessibility: Support prefers-reduced-motion reset */
 @media (prefers-reduced-motion: reduce) {
-  * {
+  :where(:not(.project-film-track)) {
     animation-delay: 0s !important;
     animation-duration: 0s !important;
     animation-iteration-count: 1 !important;
@@ -786,19 +786,18 @@ html, body {
 /* Moving project cards must never become anchors for the page scroll position. */
 #projects { overflow-anchor: none; }
 /* Identical reel groups wrap without a visible reset. */
-.project-film-window { contain: layout paint; overflow-anchor: none; position: relative; height: 660px; overflow: hidden; isolation: isolate; mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent); }
-.project-film-tilt { width: 84%; margin-inline: auto; transform: rotate(-10deg); transform-origin: center 330px; }
-.project-film-track { animation: projectFilmRoll 150s linear infinite; will-change: transform; }
+.project-film-window { contain: layout paint; overflow-anchor: none; position: relative; height: 660px; overflow: clip; isolation: isolate; mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent); }
+.project-film-tilt { width: calc(100% - 3rem); margin-inline: auto; transform: rotate(-4deg); transform-origin: center 330px; }
+.project-film-track { animation: projectFilmRoll var(--project-film-duration, 60s) linear infinite; will-change: transform; }
+.project-film-window[data-paused] .project-film-track { animation-play-state: paused; }
 .project-film-group { display: flex; flex-direction: column; gap: 24px; padding-bottom: 24px; }
 .project-film-frame { position: relative; }
 @keyframes projectFilmRoll { from { transform: translateY(0); } to { transform: translateY(-50%); } }
 @media (max-width: 639px) {
   .project-film-window { height: 620px; }
-  .project-film-tilt { width: 86%; transform: rotate(-4deg); }
+  .project-film-tilt { width: calc(100% - 2rem); transform: rotate(-3deg); transform-origin: center 310px; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .project-film-window { overflow-y: auto; mask-image: none; }
-  .project-film-tilt { transform: none; width: 100%; }
-  .project-film-track { animation: none; will-change: auto; }
-  .project-film-group[aria-hidden="true"] { display: none; }
-}
+.project-film-window:has(a:focus-visible) { overflow-y: auto; mask-image: none; }
+.project-film-window:has(a:focus-visible) .project-film-tilt { transform: none; width: 100%; }
+.project-film-window:has(a:focus-visible) .project-film-track { animation: none; will-change: auto; }
+.project-film-window:has(a:focus-visible) .project-film-group[aria-hidden="true"] { display: none; }
